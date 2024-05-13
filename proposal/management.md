@@ -4,8 +4,8 @@
 ## The people
 
 ### Rosie Clifton (rc859) 
-#### Strength: 
-#### Weakness:
+#### Strength: Past experience on the design part of website development.
+#### Weakness: Lack of knowledge in coding with software development.
 ### Bangyi Gao (bg432)
 #### Strength: 
 #### Weakness:

@@ -1,8 +1,11 @@
 # Problem description
-## test
 
+
+
+## Problem Statement
 
 Develop a tool that educate girls about their bodies, the periods, and fertility. It also needs to ensure data privacy, and allow user to make the tool personal.
+
 
 # Presentation of the proposal
 
@@ -17,6 +20,7 @@ In addition to the aforementioned requirements, the objectives below will be exp
 2. AI recommendation algorithm that gives suggestions on diet and fitness if enabled.
 3. An efficient compression scheme to reduce local memory requirements.
 4. Data encryption to ensure locally stored information is secure in the event of leakage.
+
 
 # Assessment of the quality of the proposal
 

@@ -10,13 +10,13 @@
 #### Strength: 
 #### Weakness:
 ### Zi Cai (zc348)
-#### Strength: 
-#### Weakness:
+#### Strength: Past experiences in building and training AI models from scratch, familiar with Python, and experiences in coding collaboratively.
+#### Weakness: Lack knowledge in software development and UI design.
 
 
 ## The resources needed
 
-#### Computers
+#### Computers (GPUs are needed if we need to train AI models)
 #### Algorithms
 
 

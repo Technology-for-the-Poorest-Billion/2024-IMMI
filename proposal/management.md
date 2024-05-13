@@ -16,14 +16,19 @@
 
 ## The resources needed
 
-#### Computers (GPUs are needed if we need to train AI models)
-#### Algorithms
+- Computers (GPUs are needed if we need to train AI models)
+- Algorithms
 
 
 ## The timeline
 
 ### First week (May 9 - May 15)
-#### 
+- communicate with Sarah to clarify user demands and schedule periodic meetings for progress checking and ensuring solution meets user demand.
+- Form the overall project proposal
+  - Problem definition.
+  - Objective hierarchy to provide guidance in the order of tackling the problem.
+  - Define testible criteria for each objective for verifying that design requirements are met.
+  - Reasonable task assignments that utilizes each member's strength.
 
 ### Second week (May 16 - May 22)
 #### 

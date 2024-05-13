@@ -29,6 +29,7 @@
   - Objective hierarchy to provide guidance in the order of tackling the problem.
   - Define testible criteria for each objective for verifying that design requirements are met.
   - Reasonable task assignments that utilizes each member's strength.
+- Research on data privacy, prediction algorithm, and learning the basics to web-based app development.
 
 ### Second week (May 16 - May 22)
 #### 

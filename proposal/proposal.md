@@ -1,5 +1,6 @@
 # Problem description
-
+There's still a problem with the lack of education about periods and reproductive health across many countries. There are still a large number of girls feeling confused and uninformed when they first start their period. There isn't a safe 
+and accessable way for women to monitor and learn about their periods.
 
 
 ## Problem Statement

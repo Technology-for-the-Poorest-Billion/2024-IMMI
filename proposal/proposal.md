@@ -1,7 +1,5 @@
 # Problem description
-There's still a problem with the lack of education about periods and reproductive health across many countries. There are still a large number of girls feeling confused and uninformed when they first start their period. There isn't a safe 
-and accessible way for women to monitor and learn about their periods.
-
+The issue of low awareness of the menstrual cycle persists despite the increasing economy, statistics have shown that 40% of the girls in the US felt "confused and unprepared" for their first period, this problem is more prominent in developing countries. Current methods for raising awareness and/or providing assistance such as cycle tracking apps have exhibited negligence toward data privacy exacerbating the issue despite 79% of women showing concerns. It is therefore vital and urgent to develop means of remediation.
 
 ## Problem Statement
 

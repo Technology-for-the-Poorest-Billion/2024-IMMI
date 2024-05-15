@@ -3,7 +3,7 @@ The issue of low awareness of the menstrual cycle persists despite the increasin
 
 ## Problem Statement
 
-*Develop a tool that raises girls' awareness of their bodies, periods, and fertility with the concern to ensure data privacy and allow users to make the tool customisable.*
+*Develop a tool that raises girls' awareness of their bodies, periods, and fertility with the concern to ensure data privacy and allow users to customise the tool.*
 
 
 # Presentation of the proposal

@@ -7,8 +7,8 @@
 #### Strength: Past experience on the design part of website development.
 #### Weakness: Lack of knowledge in coding with software development.
 ### Bangyi Gao (bg432)
-#### Strength: 
-#### Weakness:
+#### Strength: Past experiences in training and implementing AI models, familiar with Python and C++. 
+#### Weakness: Lack of knowledge in software development and web development.
 ### Zi Cai (zc348)
 #### Strength: Past experiences in building and training AI models from scratch, familiar with Python, and experiences in coding collaboratively.
 #### Weakness: Lack knowledge in software development and UI design.

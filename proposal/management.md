@@ -4,7 +4,7 @@
 ## The people
 
 ### Rosie Clifton (rc859) 
-- Strength: Past experience on the design part of website development.
+- Strength: Past experience in the design part of website development.
 - Weakness: Lack of knowledge in coding with software development.
 
 ### Bangyi Gao (bg432)
@@ -12,8 +12,8 @@
 - Weakness: Lack of knowledge in software development and web development.
 
 ### Zi Cai (zc348)
-- Strength: Past experiences in building and training AI models from scratch, familiar with Python, and experiences in coding collaboratively.
-- Weakness: Lack knowledge in software development and UI design.
+- Strength: Past experiences in building and training AI models from scratch, familiarity with Python, and experience in coding collaboratively.
+- Weakness: Lack of knowledge in software development and UI design.
 
 
 ## The resources needed
@@ -70,12 +70,12 @@ Plan: In case of downtime, communicate transparently with users about the issue,
 
 3. Legal and Compliance Issues
 Risk: The application might face legal challenges or fail to comply with regulations due to changes in rules.
-Plan: If a legal issue arises, work closely with legal counsel to address it promptly. Communicate transparently with users about any impacts.
+Plan: If a legal issue arises, work closely with legal counsel to evaluate the nature of the issue, ascertain the extent of impact, and identify means of remediation.
 
 4. Project Delays
-Risk: The project might not meet its deadlines due to various unforeseen issues.
-Plan: If delays occur, reassess the timeline and prioritize essential features. Communicate with stakeholders about revised timelines and progress.
+Risk: The project might not meet its deadlines due to unforeseen issues (e.g. rework).
+Plan: If delays occur, reassess the timeline and reprioritize upcoming tasks to guarantee core features. Communicate with stakeholders about revised timelines and progress.
 
 5. Budget Overruns
 Risk: The project might exceed its allocated budget.
-Plan: If overruns occur, identify non-essential elements that can be scaled back or delayed. Seek additional funding if necessary, with a clear justification.
+Plan: If overruns occur, identify the reason behind the overrun and discover non-essential elements that can be scaled back or delayed. Seek additional funding if necessary, with a clear justification.

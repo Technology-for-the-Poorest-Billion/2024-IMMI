@@ -4,8 +4,8 @@
 ## The people
 
 ### Rosie Clifton (rc859) 
-#### Strength: Past experience on the design part of website development.
-#### Weakness: Lack of knowledge in coding with software development.
+  Strength: Past experience on the design part of website development.
+  Weakness: Lack of knowledge in coding with software development.
 ### Bangyi Gao (bg432)
 #### Strength: Past experiences in training and implementing AI models, familiar with Python and C++. 
 #### Weakness: Lack of knowledge in software development and web development.

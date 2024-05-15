@@ -3,12 +3,12 @@ The issue of low awareness of the menstrual cycle persists despite the increasin
 
 ## Problem Statement
 
-*Develop a tool that raises girls' awareness of their bodies, periods, and fertility with the concern to ensure data privacy and allow users to customise the tool.*
+*Develop a tool that raises girls' awareness of their bodies, periods, and fertility with the concern to ensure data privacy and allow users to customize the tool.*
 
 
 # Presentation of the proposal
 
-We propose an accessible web-based application centring around an online calendar that visualizes past and predicted periods, the application has the following main functions which are our primary objectives for these 4 weeks:
+We propose an accessible web-based application centering around an online calendar that visualizes past and predicted periods, the application has the following main functions which are our primary objectives for these 4 weeks:
 1. Cycle prediction based on user input.
 2. Prediction visualization on a calendar.
 3. Syncs with local calender.
@@ -23,6 +23,14 @@ In addition to the aforementioned requirements, the objectives below will be exp
 
 # Assessment of the quality of the proposal
 
-Evaluate its value in the context of the project. What will it solve, is it safe, etc? Check Lara’s slides for what to cover.
+Verifying the successful implementation of functions (including safety concerns)
+- Include testable and trackable criteria for each function.
+- Performing simulations and unit tests to ensure our app handles both normal and extreme cases of use (e.g. data surge).
+- Enlist external experts to challenge our plan for data privacy
+
+Validating that user demands are met 
+- Enabling user feedback on the app and conducting interviews after using it for some time
+- Involve users when the requirements for the solution are being defined
+- Timely communication with concerned parties to prevent deviations.
 
 

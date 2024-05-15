@@ -58,5 +58,7 @@
 
 ## Contingency plans
 
+Ideally, measures should be taken from the development stage to 
+
 #### Leaked data: take measures to prevent the data from leaking again. For example, we can implement stronger data encryption methods.
 #### Ethical concerns: ensure the AI algorithms are trained ethically and responsibly. For example, while developing AI models, we must be aware of AI ethics such as security and privacy.

@@ -54,7 +54,7 @@
 #### Other (e.g. ergonomic for computer work, biological, working at heights, lone working etc.) - YES: low-level risks associated with ergonomics of computer-based work. To be managed by careful initial setup of workstation, taking regular breaks, and avoiding extended working hours
 
 
-## Contengency plans
+## Contingency plans
 
 #### Leaked data: take measures to prevent the data from leaking again. For example, we can implement stronger data encryption methods.
 #### Ethical concerns: ensure the AI algorithms are trained ethically and responsibly. For example, while developing AI models, we must be aware of AI ethics such as security and privacy.

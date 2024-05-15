@@ -22,7 +22,18 @@ In addition to the aforementioned requirements, the objectives below will be exp
 
 
 # Assessment of the quality of the proposal
+1. Responsible
+  - 
+2. Responds to a genuine need
+  - 
+3. Adds significant value
+  - 
+4. Accessible to end-users
+  - 
+5. Context-appropriate
+  - 
 
+## Methods of Assessment
 Verifying the successful implementation of functions (including safety concerns)
 - Include testable and trackable criteria for each function.
 - Performing simulations and unit tests to ensure our app handles both normal and extreme cases of use (e.g. data surge).

@@ -47,13 +47,13 @@
 
 ## The assessment of the risks and safety
 
-#### Electrical (e.g. equipment operating at voltages >1000V, working on exposed circuits with voltages >50v) - NO
-#### Radiation (e.g. X‐rays, radio‐chemicals) - NO
-#### Chemical (e.g. harmful, toxic, flammable, sensitizer, carcinogenic etc.) - NO
-#### Laser (e.g. of class 3B or 4) - NO
-#### Robotics - NO
-#### Mechanical (e.g. power tools, workshop machinery, powered lifting etc.) - NO
-#### Other (e.g. ergonomic for computer work, biological, working at heights, lone working etc.) - YES: low-level risks associated with ergonomics of computer-based work. To be managed by careful initial setup of workstation, taking regular breaks, and avoiding extended working hours
+- Electrical (e.g. equipment operating at voltages >1000V, working on exposed circuits with voltages >50v) - NO
+- Radiation (e.g. X‐rays, radio‐chemicals) - NO
+- Chemical (e.g. harmful, toxic, flammable, sensitizer, carcinogenic etc.) - NO
+- Laser (e.g. of class 3B or 4) - NO
+- Robotics - NO
+- Mechanical (e.g. power tools, workshop machinery, powered lifting etc.) - NO
+- Other (e.g. ergonomic for computer work, biological, working at heights, lone working etc.) - YES: low-level risks associated with ergonomics of computer-based work. To be managed by careful initial setup of workstation, taking regular breaks, and avoiding extended working hours
 
 
 ## Contingency plans

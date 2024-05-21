@@ -22,7 +22,20 @@ In addition to the aforementioned requirements, the objectives below will be exp
 
 
 # Assessment of the quality of the proposal
+1. Responsible
+  - Secure data storage
+  - Accurate tracking enabling dependency
+2. Responds to a genuine need
+  - Better (more secure and personalised) product in existing market
+3. Adds significant value
+  - Urgent demand for a tool that raises awareness and ensures data privacy
+4. Accessible to end-users
+  - Software accessible from multiple operating systems and in hardware form
+5. Context-appropriate
+  - User customisable
+  - Interoperable with cell phones and smartwatches
 
+## Methods of Assessment
 Verifying the successful implementation of functions (including safety concerns)
 - Include testable and trackable criteria for each function.
 - Performing simulations and unit tests to ensure our app handles both normal and extreme cases of use (e.g. data surge).

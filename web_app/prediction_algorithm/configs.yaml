@@ -1,0 +1,12 @@
+max_cycle_length: 99
+default_cycle_length: 28
+average_min: 21
+average_max: 39
+end_of_cycle_alert_days: 3
+regular_cycle_range_min: 26
+regular_cycle_range_max: 32
+fertile_window_start: 8
+fertile_window_end: 19
+beep_alert_on: 8
+beep_alert_off: 20
+average_window: 3

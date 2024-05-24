@@ -1,3 +1,8 @@
+# User Actions
+record_new_cycle: 0   # 0 -> False/1 -> True
+reset: 0
+
+# Model Params
 max_cycle_length: 99
 default_cycle_length: 28
 average_min: 21
@@ -10,3 +15,7 @@ fertile_window_end: 19
 beep_alert_on: 8
 beep_alert_off: 20
 average_window: 3
+
+# Save Data
+save_path: C:\flutter_dev\2024-IMMI\web_app\prediction_algorithm
+save_file_name: cycle_data.txt

@@ -1,6 +1,7 @@
 # User Actions
-record_new_cycle: 0   # 0 -> False/1 -> True
-reset: 0
+record_new_cycle: 1   # 0 -> False/1 -> True
+day_of_cycle: 1
+reset: 0              # 0 -> False/1 -> True
 
 # Model Params
 max_cycle_length: 99

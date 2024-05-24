@@ -7,6 +7,7 @@ def get_args():
 
     # User Actions
     parser.add_argument("--record_new_cycle", type=int, default=0)
+    parser.add_argument("--day_of_cycle", type=int, default=1)
     parser.add_argument("--reset", type=int, default=0)
 
     # Model Params
@@ -48,6 +49,7 @@ def get_args():
     assert args.reset in [0, 1], 'reset can only take value 0 or 1 for boolean conversion'
     args.record_new_cycle = bool(args.record_new_cycle)
     args.reset = bool(args.reset)
+    assert args.day_of_cycle >= 1 and args.day_of_cycle <= args.max_cycle_length, 'Check day_of_cycle input'
 
     return args
 

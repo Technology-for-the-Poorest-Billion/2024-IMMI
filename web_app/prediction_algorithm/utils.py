@@ -1,6 +1,16 @@
 import numpy as np
+import datetime
 import os.path as osp
 import os
+
+
+def datetime_to_str(input):
+    return input.strftime('%Y/%m/%d')
+
+
+def str_to_datetime(input: str):
+    details = input.split('/')
+    return datetime.date(int(details[0]), int(details[1]), int(details[2]))
 
 
 def save_data(data, save_dir: str, file_name: str):
@@ -11,7 +21,7 @@ def save_data(data, save_dir: str, file_name: str):
     else:
         path = osp.join(save_dir, file_name)
 
-    with open(path, 'w') as file:
+    with open(path, 'a') as file:
         file.write(data + '\n')
 
 

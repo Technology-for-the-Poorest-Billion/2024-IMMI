@@ -5,6 +5,10 @@ import yaml
 def get_args():
     parser = argparse.ArgumentParser()
 
+    # User Actions
+    parser.add_argument("--record_new_cycle", type=int, default=0)
+    parser.add_argument("--reset", type=int, default=0)
+
     # Model Params
     parser.add_argument("--max_cycle_length", type=int, default=99)
     parser.add_argument("--default_cycle_length", type=int, default=28)
@@ -19,7 +23,11 @@ def get_args():
     parser.add_argument("--beep_alert_off", type=int, default=20)
     parser.add_argument("--average_window", type=int, default=3)
 
-    # Config file
+    # Save Data
+    parser.add_argument("--save_path", type=str)
+    parser.add_argument("--save_file_name", type=str)
+
+    # Config File
     config_parser = argparse.ArgumentParser(description='Algorithm Config', add_help=False)
     config_parser.add_argument('-c',
                                '--config',
@@ -35,6 +43,11 @@ def get_args():
         parser.set_defaults(**cfg)
 
     args = parser.parse_args(remaining)
+    assert args.save_path and args.save_file_name is not None, 'Past data directory and file name must be specified'
+    assert args.record_new_cycle in [0, 1], 'record_new_cycle can only take value 0 or 1 for boolean conversion'
+    assert args.reset in [0, 1], 'reset can only take value 0 or 1 for boolean conversion'
+    args.record_new_cycle = bool(args.record_new_cycle)
+    args.reset = bool(args.reset)
 
     return args
 

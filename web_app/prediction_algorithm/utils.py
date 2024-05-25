@@ -1,7 +1,6 @@
-import numpy as np
 import datetime
 import os.path as osp
-import os
+from prettytable import PrettyTable
 
 
 def datetime_to_str(input):
@@ -11,6 +10,14 @@ def datetime_to_str(input):
 def str_to_datetime(input: str):
     details = input.split('/')
     return datetime.date(int(details[0]), int(details[1]), int(details[2]))
+
+
+def display_output(output: dict):
+
+    t = PrettyTable(['Name', 'Value'])
+    for k, v in output.items():
+        t.add_row([f'{k}', v])
+    print(t)
 
 
 def update_data(new_data, save_dir: str, file_name: str):

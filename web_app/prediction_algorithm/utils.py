@@ -13,6 +13,22 @@ def str_to_datetime(input: str):
     return datetime.date(int(details[0]), int(details[1]), int(details[2]))
 
 
+def update_data(new_data, save_dir: str, file_name: str):
+
+    _, tail = osp.split(save_dir)
+    if tail == file_name:
+        path = save_dir
+    else:
+        path = osp.join(save_dir, file_name)
+
+    with open(path, 'r') as file:
+        data = file.readlines()
+
+    data[-1] = new_data + '\n'
+    with open(path, 'w') as file: 
+        file.writelines(data)
+
+
 def save_data(data, save_dir: str, file_name: str):
 
     _, tail = osp.split(save_dir)

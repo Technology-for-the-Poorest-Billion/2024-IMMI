@@ -21,7 +21,7 @@ Prediction algorithm development
 
 ## Individual Development
 - Improved collaboration skills.
-  - Repository management, code merging and formatting for easier maintenance.
+  - Repository management, code merging and formatting for easier maintenance, and keeping commits frequent and documented in case of error. 
   - Better understanding of how individual strengths can be paired with tasks.
 - Time management
   - Include delays and rework into planning (e.g. IMMI does not respond immediately).

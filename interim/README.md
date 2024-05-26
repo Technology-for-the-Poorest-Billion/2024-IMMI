@@ -12,7 +12,11 @@
 - Reimplemented the algorithm in Python. This allows for insights into the theory behind the code and forces one to consider all possible deviations during usage
 - Research into alternative prediction algorithms (time series e.g. ARMA and ML e.g. CNN)
 
-## Issues and Solutions
+## Issues and Steps to Solution
+Prediction algorithm development
+1. Research into popular algorithms -> hard to implement in a short time frame
+2. Develop a basic time series predictor -> time-consuming
+3. Building based on IMMI’s work instead of reinventing the wheel, reimplementation in a familiar language -> better code understanding and easier domain transfer
 
 
 ## Individual Development

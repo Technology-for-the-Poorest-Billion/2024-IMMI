@@ -26,9 +26,9 @@ In addition to the aforementioned requirements, the objectives below will be exp
   - Secure data storage
   - Accurate tracking enabling dependency
 2. Responds to a genuine need
-  - Better (more secure and personalised) product in existing market
+  - Better (more secure and personalized) product in the existing market
 3. Adds significant value
-  - Urgent demand for a tool that raises awareness and ensures data privacy
+  - Conserves effort and time in cycle tracking; prevents anxiety and emotional issues by spreading awareness
 4. Accessible to end-users
   - Software accessible from multiple operating systems and in hardware form
 5. Context-appropriate

@@ -40,3 +40,4 @@ Prediction algorithm development
 - More insights into coding from a user’s perspective and how to consider all deviations.
 
 ## Updated Timeline
+See GM2_2024_IMMI_Interim_Presentation.pdf, last section

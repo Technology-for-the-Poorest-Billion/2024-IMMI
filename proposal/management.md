@@ -1,4 +1,4 @@
-# Project management plan
+# Project Management Plan
 
 
 ## The people

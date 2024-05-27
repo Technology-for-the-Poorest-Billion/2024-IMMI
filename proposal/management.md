@@ -1,4 +1,4 @@
-# Project management plan
+# Project Management Plan
 
 
 ## The people
@@ -80,9 +80,7 @@
 - Mechanical (e.g. power tools, workshop machinery, powered lifting etc.) - NO
 - Other (e.g. ergonomic for computer work, biological, working at heights, lone working etc.) - YES: low-level risks associated with ergonomics of computer-based work. To be managed by careful initial setup of workstation, taking regular breaks, and avoiding extended working hours
 
-## Contingency plans
-
-Ideally, measures should be taken from the development stage to reduce the likelihood and/or impact of risks, this involves frequent communication to update requirements, app optimization to improve its quality, and more. Nevertheless, contingency plans are also vital to handle the onset of risks.
+## Critical Scenarios during Operations
 
 1. Data Privacy Breach
 - Risk: User data could be leaked or accessed by unauthorized parties.
@@ -96,10 +94,18 @@ Ideally, measures should be taken from the development stage to reduce the likel
 - Risk: The application might face legal challenges or fail to comply with regulations due to changes in rules.
 - Plan: If a legal issue arises, work closely with legal counsel to evaluate the nature of the issue, ascertain the extent of impact, and identify means of remediation.
 
-4. Project Delays
+## Contingency plans
+
+Ideally, measures should be taken from the development stage to reduce the likelihood and/or impact of risks, this involves frequent communication to update requirements, app optimization to improve its quality, and more. Nevertheless, contingency plans are also vital to handle the onset of risks.
+
+1. Extreme technical difficulty
+- Risk: progress stuck due to difficulty in overcoming technical issues
+- Plan: seek solutions online, attempt to find solutions as a group, enlist external help (supervisor/IMMI), attempt alternative approach
+
+2. Project Delays
 - Risk: The project might not meet its deadlines due to unforeseen issues (e.g. rework).
 - Plan: If delays occur, reassess the timeline and reprioritize upcoming tasks to guarantee core features. Communicate with the coordinator about revised timelines and progress.
 
-5. Budget Overruns
+3. Budget Overruns
 - Risk: The project might exceed its allocated budget.
 - Plan: If overruns occur, identify the reason behind the overrun and discover non-essential elements that can be scaled back or delayed. Seek additional funding if necessary, with a clear justification.

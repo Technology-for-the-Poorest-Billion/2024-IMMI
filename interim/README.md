@@ -12,7 +12,8 @@
 ### Rosie Clifton (rc859) 
 - Design a visually accessible information page.
 - Research on how to store data locally. <br />
-
+https://pub.dev/packages/localstorage
+https://pub.dev/packages/flutter_secure_storage
 - Started looking into using similar design techniques for the data and diary page.
 
 ### Bangyi Gao (bg432)

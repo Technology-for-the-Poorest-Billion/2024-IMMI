@@ -23,7 +23,7 @@ class PeriodTrackerApp extends StatelessWidget {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
       title: 'Period Tracker',
-      theme: themeProvider.themeData,  // Corrected from 'theme' to 'themeData'
+      theme: themeProvider.themeData,
       home: MainPage(),
     );
   }
@@ -56,7 +56,7 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Period Tracker'),
-        backgroundColor: Colors.pink,  // Adjusted to match your theme
+        backgroundColor: Colors.pink,
       ),
       body: IndexedStack(
         index: _selectedIndex,

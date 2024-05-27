@@ -29,7 +29,7 @@ class _DiaryPageState extends State<DiaryPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Diary'),
-        backgroundColor: Colors.purple,  // Adjusted to match your theme
+        backgroundColor: Colors.purple,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -63,7 +63,6 @@ class _DiaryPageState extends State<DiaryPage> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Here you can handle saving the diary text to persistent storage
                 print('Saving Data for ${selectedDate.toLocal().toString().split(' ')[0]}: ${diaryController.text}');
               },
               child: Text('Save Diary'),

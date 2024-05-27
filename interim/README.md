@@ -2,10 +2,16 @@
 
 ## Progress
 ### Rosie Clifton (rc859) 
-- 
+- Design a visually accessible information page.
+- Research on how to store data locally。
+- Started looking into using similar design techniques for the data and diary page.
+
 
 ### Bangyi Gao (bg432)
-- 
+- Develop the software framework with 5 subpages.
+- Research on GPT prompting for more efficient software development.
+- Started to looking into how to sync and visualize local data on the calendar.
+
 
 ### Zi Cai (zc348)
 - Fully comprehended IMMI's prediction algorithm
@@ -29,7 +35,9 @@ Prediction algorithm development
   - Prioritize tasks that are associated with primary objectives and wider impact.
 
 ### Rosie Clifton (rc859) 
-- 
+- Learned dart.
+- Learned how to better collaborate using git.
+- Learned more software design techniques.
 
 ### Bangyi Gao (bg432)
 - 

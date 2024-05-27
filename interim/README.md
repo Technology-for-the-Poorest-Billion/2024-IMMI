@@ -11,7 +11,8 @@
 ##  Individual Progress
 ### Rosie Clifton (rc859) 
 - Design a visually accessible information page.
-- Research on how to store data locally。
+- Research on how to store data locally. <br />
+
 - Started looking into using similar design techniques for the data and diary page.
 
 ### Bangyi Gao (bg432)

@@ -18,8 +18,8 @@
 - Develop the software framework
 - Set template for Home, Diary, and Setting Page
 - Research on GPT Prompting
-  https://www.promptingguide.ai/techniques/cot#zero-shot-cot-prompting
-  https://www.ibm.com/topics/ai-hallucinations
+https://www.promptingguide.ai/techniques/cot#zero-shot-cot-prompting
+https://www.ibm.com/topics/ai-hallucinations
 - Started looking into how to sync local data with the calendar
 
 
@@ -27,7 +27,7 @@
 - Fully comprehended IMMI's prediction algorithm
 - Reimplemented the algorithm in Python. This allows for insights into the theory behind the code and forces one to consider all possible deviations during usage
 - Research into alternative prediction algorithms (e.g. ARMA, LSTM)
-  https://arxiv.org/pdf/2308.07927
+https://arxiv.org/pdf/2308.07927
 
 ## Issues and Steps to Solution
 Prediction algorithm development

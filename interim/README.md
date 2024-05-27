@@ -18,9 +18,10 @@
 - Develop the software framework
 - Set template for Home, Diary, and Setting Page
 - Research on GPT Prompting
+- https://www.promptingguide.ai/techniques/cot#zero-shot-cot-prompting
+- https://www.ibm.com/topics/ai-hallucinations
 - Started looking into how to sync local data with the calendar
-https://www.promptingguide.ai/techniques/cot#zero-shot-cot-prompting
-https://www.ibm.com/topics/ai-hallucinations
+
 
 ### Zi Cai (zc348)
 - Fully comprehended IMMI's prediction algorithm

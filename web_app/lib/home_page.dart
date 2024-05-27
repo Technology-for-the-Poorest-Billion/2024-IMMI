@@ -34,88 +34,99 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // Adjust colors dynamically based on theme
-    var isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    var backgroundColor = isDarkMode ? Colors.grey[900] : Colors.white;
-    var textColor = isDarkMode ? Colors.white : Colors.black;
-    var calendarBackgroundColor = [
-      Colors.lightBlue.shade50,
-      Colors.lightGreen.shade50,
-      Colors.pink.shade50
-    ].map((color) => isDarkMode ? color.withOpacity(0.3) : color).toList();
+ @override
+Widget build(BuildContext context) {
+  // Adjust colors dynamically based on theme
+  var isDarkMode = Theme.of(context).brightness == Brightness.dark;
+  var textColor = isDarkMode ? Colors.white : Colors.black;
+  var calendarBackgroundColor = [
+    Colors.lightBlue.shade50,
+    Colors.lightGreen.shade50,
+    Colors.pink.shade50
+  ].map((color) => isDarkMode ? color.withOpacity(0.3) : color).toList();
 
-    return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [
-                    Text('Average Cycle Length', style: TextStyle(fontSize: 18.0, color: textColor)),
-                    Row(
-                      children: [
-                        IconButton(icon: Icon(Icons.remove, color: textColor), onPressed: () {
-                          setState(() {
-                            if (_cycleLength > 1) _cycleLength--;
-                            _calculatePredictedPeriods();
-                          });
-                        }),
-                        Text('$_cycleLength days', style: TextStyle(fontSize: 18.0, color: textColor)),
-                        IconButton(icon: Icon(Icons.add, color: textColor), onPressed: () {
-                          setState(() {
-                            _cycleLength++;
-                            _calculatePredictedPeriods();
-                          });
-                        }),
-                      ],
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text('Current Day of Cycle', style: TextStyle(fontSize: 18.0, color: textColor)),
-                    Row(
-                      children: [
-                        IconButton(icon: Icon(Icons.remove, color: textColor), onPressed: () {
-                          setState(() {
-                            if (_currentDay > 1) _currentDay--;
-                          });
-                        }),
-                        Text('Day $_currentDay', style: TextStyle(fontSize: 18.0, color: textColor)),
-                        IconButton(icon: Icon(Icons.add, color: textColor), onPressed: () {
-                          setState(() {
-                            _currentDay++;
-                          });
-                        }),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 20.0),
-          Column(
+  return Scaffold(
+    body: Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              Column(
                 children: [
-                  Expanded(child: _buildCalendar(DateTime(_focusedDay.year, _focusedDay.month - 1, 1), calendarBackgroundColor[0], textColor, true)),
-                  Expanded(child: _buildCalendar(_focusedDay, calendarBackgroundColor[1], textColor, true)),
-                  Expanded(child: _buildCalendar(DateTime(_focusedDay.year, _focusedDay.month + 1, 1), calendarBackgroundColor[2], textColor, true)),
+                  Text('Average Cycle Length', style: TextStyle(fontSize: 18.0, color: textColor)),
+                  Row(
+                    children: [
+                      IconButton(icon: Icon(Icons.remove, color: textColor), onPressed: () {
+                        setState(() {
+                          if (_cycleLength > 1) _cycleLength--;
+                          _calculatePredictedPeriods();
+                        });
+                      }),
+                      Text('$_cycleLength days', style: TextStyle(fontSize: 18.0, color: textColor)),
+                      IconButton(icon: Icon(Icons.add, color: textColor), onPressed: () {
+                        setState(() {
+                          _cycleLength++;
+                          _calculatePredictedPeriods();
+                        });
+                      }),
+                    ],
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Text('Current Day of Cycle', style: TextStyle(fontSize: 18.0, color: textColor)),
+                  Row(
+                    children: [
+                      IconButton(icon: Icon(Icons.remove, color: textColor), onPressed: () {
+                        setState(() {
+                          if (_currentDay > 1) _currentDay--;
+                        });
+                      }),
+                      Text('Day $_currentDay', style: TextStyle(fontSize: 18.0, color: textColor)),
+                      IconButton(icon: Icon(Icons.add, color: textColor), onPressed: () {
+                        setState(() {
+                          _currentDay++;
+                        });
+                      }),
+                    ],
+                  ),
                 ],
               ),
             ],
           ),
-        ],
-      ),
-    );
-  }
+        ),
+        SizedBox(height: 20.0),
+        Expanded(
+          child: Row(
+            children: [
+              buildCalendarWithLabel(DateTime(_focusedDay.year, _focusedDay.month - 1, 1), textColor, calendarBackgroundColor[0]),
+              buildCalendarWithLabel(_focusedDay, textColor, calendarBackgroundColor[1]),
+              buildCalendarWithLabel(DateTime(_focusedDay.year, _focusedDay.month + 1, 1), textColor, calendarBackgroundColor[2]),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+Widget buildCalendarWithLabel(DateTime date, Color textColor, Color backgroundColor) {
+  return Expanded(
+    child: Column(
+      children: [
+        Text(
+          DateFormat.yMMM().format(date),
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: textColor),
+          textAlign: TextAlign.center,
+        ),
+        _buildCalendar(date, backgroundColor, textColor, true),
+      ],
+    ),
+  );
+}
 
   Widget _buildCalendar(DateTime date, Color backgroundColor, Color textColor, bool fullHeight) {
     var isDarkMode = Theme.of(context).brightness == Brightness.dark;
@@ -148,15 +159,18 @@ class _HomePageState extends State<HomePage> {
               });
             },
             calendarBuilders: CalendarBuilders(
-              markerBuilder: (context, day, focusedDay) {
+              markerBuilder: (context, day, events) {
                 if (_predictedPeriods.any((predictedDate) => _isSameDay(predictedDate, day))) {
                   return Container(
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      color: Colors.red.withOpacity(0.5),
+                      color: isDarkMode ? Colors.redAccent : Colors.red,  // Adjust the color based on the theme
                       shape: BoxShape.circle,
                     ),
-                    child: Text('${day.day}', style: TextStyle(color: Colors.white)),
+                    child: Text(
+                      '${day.day}',
+                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
                   );
                 }
                 return null;

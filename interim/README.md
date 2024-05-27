@@ -26,7 +26,7 @@
 ### Zi Cai (zc348)
 - Fully comprehended IMMI's prediction algorithm
 - Reimplemented the algorithm in Python. This allows for insights into the theory behind the code and forces one to consider all possible deviations during usage
-- Research into alternative prediction algorithms (time series e.g. ARMA and ML e.g. CNN)
+- Research into alternative prediction algorithms (e.g. ARMA, LSTM)
 
 ## Issues and Steps to Solution
 Prediction algorithm development

@@ -6,6 +6,7 @@
 - Syncing with the local calendar​ (not started)
 - Local data storage (a bit stuck)
 - User customization of the webpage and calendar in terms of appearance, notes, emojis, etc (80% completed)
+*updated proposal.md and management.md to reflect presentation feedbacks
 
 ##  Individual Progress
 ### Rosie Clifton (rc859) 

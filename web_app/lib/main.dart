@@ -1,22 +1,28 @@
+// File: main.dart
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'data_page.dart';
 import 'diary_page.dart';
 import 'home_page.dart';
 import 'info_page.dart';
-import 'setting_page.dart';
+import 'setting_page.dart';  // This import brings ThemeProvider and SettingPage
 
 void main() {
-  runApp(PeriodTrackerApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ThemeProvider(ThemeData.light()),  // Initialize with light theme
+      child: PeriodTrackerApp(),
+    ),
+  );
 }
 
 class PeriodTrackerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
       title: 'Period Tracker',
-      theme: ThemeData(
-        primarySwatch: Colors.pink,
-      ),
+      theme: themeProvider.theme,  // Use theme from themeProvider
       home: MainPage(),
     );
   }
@@ -36,7 +42,7 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  static List<Widget> _widgetOptions = <Widget>[
+  List<Widget> _widgetOptions = <Widget>[
     DataPage(),
     DiaryPage(),
     HomePage(),
@@ -50,7 +56,10 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         title: Text('Period Tracker'),
       ),
-      body: _widgetOptions.elementAt(_selectedIndex),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _widgetOptions,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

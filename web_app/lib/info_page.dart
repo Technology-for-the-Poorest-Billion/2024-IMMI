@@ -76,7 +76,7 @@ class InfoPage extends StatelessWidget {
         padding: EdgeInsets.all(10),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          childAspectRatio: 1.25,
+          childAspectRatio: 1,
           crossAxisSpacing: 10,
           mainAxisSpacing: 10,
         ),
@@ -110,7 +110,7 @@ class StageCard extends StatelessWidget {
             Text(
               stage.title,
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 28,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -136,7 +136,7 @@ class StageCard extends StatelessWidget {
                           'Physically: ${stage.physically}',
                           'Exercise: ${stage.exercise}',
                           'Diet: ${stage.diet}'
-                          ], style: TextStyle(color: Colors.white) ,
+                          ], style: TextStyle(color: Colors.white, fontSize: 14) ,
                      ),
 
           ],

@@ -31,6 +31,16 @@ Prediction algorithm development
 2. Develop a basic time series predictor -> time-consuming
 3. Building based on IMMI’s work instead of reinventing the wheel, reimplementation in a familiar language -> better code understanding and easier domain transfer
 
+Framework Development
+1. Develop an accessible software platform -> Need for a multi-platform development tool
+2. Look into software development platform -> hard to learn within a limited timeframe
+3. Develop the software framework in Flutter, which is accessible on all platforms, with GPT Copilot -> Simplifies the initial development and later implementation
+
+Software design
+1. Look into different design methods including making the web pages scrollable -> time-consuming
+2. Develop accessible and informative web pages -> time-consuming
+3. Lots of helpful websites and YouTube videos explaining how to implement these methods into the web design -> better understanding of the flutter code helping when looking at the other pages
+
 ## Individual Development
 - Improved collaboration skills.
   - Repository management, code merging and formatting for easier maintenance, and keeping commits frequent and documented in case of error. 

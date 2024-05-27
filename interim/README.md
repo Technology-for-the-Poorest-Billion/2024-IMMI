@@ -17,8 +17,8 @@
 ### Bangyi Gao (bg432)
 - Develop the software framework
 - Set template for Home, Diary, and Setting Page
-- Research on GPT Prompting
-https://www.promptingguide.ai/techniques/cot#zero-shot-cot-prompting
+- Research on GPT Prompting <br />
+https://www.promptingguide.ai/techniques/cot#zero-shot-cot-prompting <br />
 https://www.ibm.com/topics/ai-hallucinations
 - Started looking into how to sync local data with the calendar
 
@@ -26,7 +26,7 @@ https://www.ibm.com/topics/ai-hallucinations
 ### Zi Cai (zc348)
 - Fully comprehended IMMI's prediction algorithm
 - Reimplemented the algorithm in Python. This allows for insights into the theory behind the code and forces one to consider all possible deviations during usage
-- Research into alternative prediction algorithms (e.g. ARMA, LSTM)
+- Research into alternative prediction algorithms (e.g. ARMA, LSTM) <br />
 https://arxiv.org/pdf/2308.07927
 
 ## Issues and Steps to Solution

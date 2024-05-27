@@ -1,11 +1,11 @@
-// File: main.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'data_page.dart';
 import 'diary_page.dart';
 import 'home_page.dart';
 import 'info_page.dart';
-import 'setting_page.dart';  // This import brings ThemeProvider and SettingPage
+import 'setting_page.dart';
+import 'theme_provider.dart'; 
 
 void main() {
   runApp(
@@ -19,10 +19,11 @@ void main() {
 class PeriodTrackerApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Accessing the ThemeProvider from the provider package
     final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
       title: 'Period Tracker',
-      theme: themeProvider.theme,  // Use theme from themeProvider
+      theme: themeProvider.themeData,  // Corrected from 'theme' to 'themeData'
       home: MainPage(),
     );
   }
@@ -55,6 +56,7 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Period Tracker'),
+        backgroundColor: Colors.pink,  // Adjusted to match your theme
       ),
       body: IndexedStack(
         index: _selectedIndex,

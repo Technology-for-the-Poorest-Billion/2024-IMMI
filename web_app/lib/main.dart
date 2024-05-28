@@ -6,7 +6,6 @@ import 'home_page.dart';
 import 'info_page.dart';
 import 'setting_page.dart';
 import 'theme_provider.dart'; 
-import 'prediction.dart'; 
 
 void main() {
   runApp(

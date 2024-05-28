@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
 
@@ -13,25 +14,12 @@ class _HomePageState extends State<HomePage> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
-  DateTime? _periodStartDate;
-  List<DateTime> _predictedPeriods = [];
-  TextEditingController _noteController = TextEditingController();
-  Map<String, String> _notes = {};
-  int _cycleLength = 28;
   int _currentDay = 1;
 
   @override
   void initState() {
     super.initState();
     _selectedDay = DateTime.now();  // Initialize _selectedDay
-    _loadNotes();
-  }
-
-  Future<void> _loadNotes() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _notes = Map<String, String>.from(json.decode(prefs.getString('notes') ?? '{}'));
-    });
   }
 
   @override
@@ -45,11 +33,23 @@ class _HomePageState extends State<HomePage> {
     Colors.pink.shade50
   ].map((color) => isDarkMode ? color.withOpacity(0.3) : color).toList();
 
+  // Calculate the start date of the cycle
+  DateTime startDateOfCycle = DateTime(_focusedDay.year, _focusedDay.month, _focusedDay.day).subtract(Duration(days: _currentDay - 1));
+
+  // Format the start date to a more readable form, e.g., Jan 28, 2024
+    String formattedStartDate = DateFormat('MMM d, y').format(startDateOfCycle);
+
     return Scaffold(
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(vertical: 20.0),
+            child: Center(
+              child: Text('Start Date of Cycle: $formattedStartDate', style: TextStyle(fontSize: 18.0, color: textColor)),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -144,27 +144,8 @@ Widget buildCalendarWithLabel(DateTime date, Color textColor, Color backgroundCo
               setState(() {
                 _selectedDay = selectedDay;
                 _focusedDay = focusedDay;
-                _noteController.text = _notes[selectedDay.toIso8601String()] ?? '';
               });
             },
-            calendarBuilders: CalendarBuilders(
-              markerBuilder: (context, day, events) {
-                if (_predictedPeriods.any((predictedDate) => _isSameDay(predictedDate, day))) {
-                  return Container(
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      color: isDarkMode ? Colors.redAccent : Colors.red,  // Adjust the color based on the theme
-                      shape: BoxShape.circle,
-                    ),
-                    child: Text(
-                      '${day.day}',
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                  );
-                }
-                return null;
-              },
-            ),
             calendarStyle: CalendarStyle(
               todayDecoration: BoxDecoration(color: todayColor, shape: BoxShape.circle),
               selectedDecoration: BoxDecoration(color: selectedColor, shape: BoxShape.circle),
@@ -180,20 +161,8 @@ Widget buildCalendarWithLabel(DateTime date, Color textColor, Color backgroundCo
     );
   }
 
-
   bool _isSameDay(DateTime a, DateTime b) {
     return a.year == b.year && a.month == b.month && a.day == b.day;
-  }
-
-  void _calculatePredictedPeriods() {
-    _predictedPeriods.clear();
-    if (_periodStartDate != null) {
-      DateTime nextPeriod = _periodStartDate!;
-      while (nextPeriod.isBefore(DateTime.now().add(Duration(days: 365)))) {
-        _predictedPeriods.add(nextPeriod);
-        nextPeriod = nextPeriod.add(Duration(days: _cycleLength));
-      }
-    }
   }
 
   int _getWeekCount(DateTime date) {

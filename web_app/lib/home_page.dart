@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:intl/intl.dart';
-import 'dart:convert';
+// import 'utils.dart'; 
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -42,14 +41,16 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: Column(
         children: [
+          SizedBox(height: 20.0), // Increased spacing here
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: Center(
               child: Text('Start Date of Cycle: $formattedStartDate', style: TextStyle(fontSize: 18.0, color: textColor)),
             ),
           ),
+          SizedBox(height: 20.0), // Increased spacing here
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -87,7 +88,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          SizedBox(height: 20.0),
+          SizedBox(height: 30.0), // Increased spacing here
           Expanded(
             child: Row(
               children: [

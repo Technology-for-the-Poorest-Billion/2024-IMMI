@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:localstorage/localstorage.dart';
+import 'storage_manager.dart';
 
 class DiaryPage extends StatefulWidget {
+  final LocalStorage storage;  // Define a variable to hold the LocalStorage instance
+
+  DiaryPage({required this.storage});  // Modify constructor to accept LocalStorage
+
   @override
   _DiaryPageState createState() => _DiaryPageState();
 }
@@ -9,7 +15,6 @@ class _DiaryPageState extends State<DiaryPage> {
   DateTime selectedDate = DateTime.now();
   TextEditingController diaryController = TextEditingController();
 
-  // Function to show date picker and update the selected date
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -20,6 +25,23 @@ class _DiaryPageState extends State<DiaryPage> {
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadData();
+  }
+
+  void loadData() async {
+    // Assume the key 'diary_entry' is used to store the diary text
+    String key = 'diary_entry';
+    String? diaryEntry = await StorageManager.loadData(key);
+    if (diaryEntry != null) {
+      setState(() {
+        diaryController.text = diaryEntry;
       });
     }
   }
@@ -42,7 +64,6 @@ class _DiaryPageState extends State<DiaryPage> {
               child: Text('Select Date'),
             ),
             SizedBox(height: 8),
-            // Display the selected date
             Text(
               'Selected Date: ${selectedDate.toLocal().toString().split(' ')[0]}',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
@@ -56,17 +77,23 @@ class _DiaryPageState extends State<DiaryPage> {
                   border: OutlineInputBorder(),
                 ),
                 maxLines: null,
-                minLines: 10, // Gives a larger text field
+                minLines: 10,
                 keyboardType: TextInputType.multiline,
               ),
             ),
             SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                print('Saving Data for ${selectedDate.toLocal().toString().split(' ')[0]}: ${diaryController.text}');
+              onPressed: () async {
+                // Use a key that includes the date to distinguish entries by day
+                String key = 'diary_entry_${selectedDate.toIso8601String().split('T')[0]}';
+                String value = diaryController.text;  // Text from the TextFormField
+                await StorageManager.saveData(key, value);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Diary entry saved for ${selectedDate.toLocal().toString().split(' ')[0]}!'))
+                );
               },
               child: Text('Save Diary'),
-            ),
+            )
           ],
         ),
       ),

@@ -34,8 +34,8 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
- @override
-Widget build(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
   // Adjust colors dynamically based on theme
   var isDarkMode = Theme.of(context).brightness == Brightness.dark;
   var textColor = isDarkMode ? Colors.white : Colors.black;
@@ -45,73 +45,62 @@ Widget build(BuildContext context) {
     Colors.pink.shade50
   ].map((color) => isDarkMode ? color.withOpacity(0.3) : color).toList();
 
-  return Scaffold(
-    body: Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Column(
-                children: [
-                  Text('Average Cycle Length', style: TextStyle(fontSize: 18.0, color: textColor)),
-                  Row(
-                    children: [
-                      IconButton(icon: Icon(Icons.remove, color: textColor), onPressed: () {
-                        setState(() {
-                          if (_cycleLength > 1) _cycleLength--;
-                          _calculatePredictedPeriods();
-                        });
-                      }),
-                      Text('$_cycleLength days', style: TextStyle(fontSize: 18.0, color: textColor)),
-                      IconButton(icon: Icon(Icons.add, color: textColor), onPressed: () {
-                        setState(() {
-                          _cycleLength++;
-                          _calculatePredictedPeriods();
-                        });
-                      }),
-                    ],
-                  ),
-                ],
-              ),
-              Column(
-                children: [
-                  Text('Current Day of Cycle', style: TextStyle(fontSize: 18.0, color: textColor)),
-                  Row(
-                    children: [
-                      IconButton(icon: Icon(Icons.remove, color: textColor), onPressed: () {
-                        setState(() {
-                          if (_currentDay > 1) _currentDay--;
-                        });
-                      }),
-                      Text('Day $_currentDay', style: TextStyle(fontSize: 18.0, color: textColor)),
-                      IconButton(icon: Icon(Icons.add, color: textColor), onPressed: () {
-                        setState(() {
-                          _currentDay++;
-                        });
-                      }),
-                    ],
-                  ),
-                ],
-              ),
-            ],
+    return Scaffold(
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  children: [
+                    Text('Current Day of Cycle', style: TextStyle(fontSize: 18.0, color: textColor)),
+                    Row(
+                      children: [
+                        IconButton(icon: Icon(Icons.remove, color: textColor), onPressed: () {
+                          setState(() {
+                            if (_currentDay > 1) _currentDay--;
+                          });
+                        }),
+                        Text('Day $_currentDay', style: TextStyle(fontSize: 18.0, color: textColor)),
+                        IconButton(icon: Icon(Icons.add, color: textColor), onPressed: () {
+                          setState(() {
+                            _currentDay++;
+                          });
+                        }),
+                      ],
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ButtonStyle(
+                        foregroundColor: WidgetStateProperty.all<Color>(textColor)
+                      ),
+                      child: const Text('Record'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
-        SizedBox(height: 20.0),
-        Expanded(
-          child: Row(
-            children: [
-              buildCalendarWithLabel(DateTime(_focusedDay.year, _focusedDay.month - 1, 1), textColor, calendarBackgroundColor[0]),
-              buildCalendarWithLabel(_focusedDay, textColor, calendarBackgroundColor[1]),
-              buildCalendarWithLabel(DateTime(_focusedDay.year, _focusedDay.month + 1, 1), textColor, calendarBackgroundColor[2]),
-            ],
+          SizedBox(height: 20.0),
+          Expanded(
+            child: Row(
+              children: [
+                buildCalendarWithLabel(DateTime(_focusedDay.year, _focusedDay.month - 1, 1), textColor, calendarBackgroundColor[0]),
+                buildCalendarWithLabel(_focusedDay, textColor, calendarBackgroundColor[1]),
+                buildCalendarWithLabel(DateTime(_focusedDay.year, _focusedDay.month + 1, 1), textColor, calendarBackgroundColor[2]),
+              ],
+            ),
           ),
-        ),
-      ],
-    ),
-  );
-}
+        ],
+      ),
+    );
+  }
 
 Widget buildCalendarWithLabel(DateTime date, Color textColor, Color backgroundColor) {
   return Expanded(

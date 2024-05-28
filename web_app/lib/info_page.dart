@@ -110,7 +110,7 @@ class StageCard extends StatelessWidget {
             Text(
               stage.title,
               style: TextStyle(
-                fontSize: 28,
+                fontSize: 24,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -136,7 +136,7 @@ class StageCard extends StatelessWidget {
                           'Physically: ${stage.physically}',
                           'Exercise: ${stage.exercise}',
                           'Diet: ${stage.diet}'
-                          ], style: TextStyle(color: Colors.white, fontSize: 18) ,
+                          ], style: TextStyle(color: Colors.white, fontSize: 16) ,
                      ),
 
           ],

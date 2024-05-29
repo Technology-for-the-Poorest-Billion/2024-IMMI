@@ -30,7 +30,6 @@ class CyclePredictor {
     }
   }
 
-
   int predictLength(List<int> pastCycleLengths) {
     if (pastCycleLengths.isEmpty) {
         return defaultCycleLength;
@@ -44,7 +43,6 @@ class CyclePredictor {
         }
     }
   }
-
 
   bool fertilityCheck(List pastCycleStartDates) {
     DateTime now = DateTime.now();

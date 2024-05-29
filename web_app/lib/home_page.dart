@@ -14,6 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
+  DateTime _today = DateTime.now();
   DateTime? _selectedDay;
   int _currentDay = 1;
   late TextEditingController precedingController;
@@ -39,38 +40,64 @@ class _HomePageState extends State<HomePage> {
   void recordEntry(DateTime cycleStartDate, DateTime entryDate) async {
     var predictor = CyclePredictor();
 
-    // Get past data
-    var pastData = const <String, List> {
-      'pastCycleLengths': [],
-      'pastCycleStartDates': ['a', 'b'],
-      'pastEntryDates': ['x', 'y']
-    };
-    List pastCycleLengths = List.from(pastData['pastCycleLengths'] as List);
-    List pastCycleStartDates = List.from(pastData['pastCycleStartDates'] as List);
-    List pastEntryDates = List.from(pastData['pastEntryDates'] as List);
+    // Generate key from the entry date (using today's date)
+    String entryKey = CycleDataUtils.dateToString(entryDate);
 
-    bool repeated = checkRepeatedEntry(dateToString(entryDate), pastEntryDates);
-    if(repeated) {
-      // Pop-up box
-      final correctedEntryDate = await repetitionDialog(pastEntryDates[pastEntryDates.length-1],
-      dateToString(entryDate));
-      if (correctedEntryDate == null || correctedEntryDate.isEmpty) return;
+    // Load past data
+    String? pastDataString = await CycleDataUtils.readCycleData(entryKey);
+    List<int> pastCycleLengths = [];
+    List<String> pastCycleStartDates = [];
+    List<String> pastEntryDates = [];
+
+    if (pastDataString != null) {
+      List<String> parts = pastDataString.split(' ');
+      if (parts.length >= 2) {
+        pastCycleLengths.add(int.parse(parts[0]));
+        pastCycleStartDates.add(parts[1]);
+        pastEntryDates.add(entryKey);
+      }
     }
 
-    bool preceded = checkPrecededEntry(dateToString(cycleStartDate), pastCycleStartDates);
-    if(preceded) {
-      // Pop-up box
-      final correctedStartDate = await precedingDialog(pastCycleStartDates[pastCycleStartDates.length-1],
-      dateToString(cycleStartDate));
-      if (correctedStartDate == null || correctedStartDate.isEmpty) return;
+    // Check for repeated or preceded entries based on loaded data
+    bool repeated = pastEntryDates.contains(CycleDataUtils.dateToString(entryDate));
+    if (repeated) {
+      // Show a dialog to confirm the change of the start date
+      final overrideStartDate = await repetitionDialog(pastCycleStartDates.last, CycleDataUtils.dateToString(cycleStartDate));
+      
+      if (overrideStartDate == null || overrideStartDate.isEmpty) return;
+
+      if (overrideStartDate != pastCycleStartDates.last) {
+        // If the dialog returns a new start date, remove the last entry from each list
+        if (pastCycleLengths.isNotEmpty) pastCycleLengths.removeLast();
+        if (pastCycleStartDates.isNotEmpty) pastCycleStartDates.removeLast();
+        if (pastEntryDates.isNotEmpty) pastEntryDates.removeLast();
+      } else {
+        // If no new date is chosen or it's the same, just return and do nothing
+        return;
+      }
     }
 
-    // Update data
 
+    
+
+    // int errorCounter = 0;
+    // if(cycleStartDate.difference(CycleDataUtils.stringToDate(pastCycleStartDates.last)).inDays <= 0 && pastCycleStartDates.isNotEmpty) {
+    //   print('here');
+    //   final correctedStartDate = await precedingDialog(pastCycleStartDates.last, CycleDataUtils.dateToString(cycleStartDate));
+    //   if (correctedStartDate == null || correctedStartDate.isEmpty) return;
+    //   cycleStartDate = CycleDataUtils.stringToDate(correctedStartDate);
+    // }
+
+    // Update data 
+
+    //predict new cycle length based on past cycle lengths
     int predLength = predictor.predictLength(pastCycleLengths);
-    String newEntry = '${predLength.toString()} ${dateToString(cycleStartDate)} ${dateToString(entryDate)}';
 
-    // Save data
+    // Create new entry string
+    String newEntry = '$predLength ${CycleDataUtils.dateToString(cycleStartDate)}';
+
+    // Save the new data to Hive
+    await CycleDataUtils.writeCycleData(entryKey, newEntry);
   }
 
   @override
@@ -85,7 +112,7 @@ class _HomePageState extends State<HomePage> {
     ].map((color) => isDarkMode ? color.withOpacity(0.3) : color).toList();
 
     // Calculate the start date of the cycle
-    DateTime startDateOfCycle = DateTime(_focusedDay.year, _focusedDay.month, _focusedDay.day).subtract(Duration(days: _currentDay - 1));
+    DateTime startDateOfCycle = DateTime(_today.year, _today.month, _today.day).subtract(Duration(days: _currentDay - 1));
 
     // Format the start date to a more readable form, e.g., Jan 28, 2024
     String formattedStartDate = DateFormat('MMM d, y').format(startDateOfCycle);
@@ -149,15 +176,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     ElevatedButton(
                       onPressed: () async {
-                        final correctedEntryDate = await repetitionDialog('2024-05-01', '2024-05-29');
-                        if (correctedEntryDate == null || correctedEntryDate.isEmpty) return;
-                        print(correctedEntryDate);
-                        // final correctedStartDate = await precedingDialog('2024-05-01', '2024-05-29');
-                        // if (correctedStartDate == null || correctedStartDate.isEmpty) return;
-                        // print(correctedStartDate);
-                        // setState(() {
-                        //   recordEntry(startDateOfCycle, _selectedDay);
-                        // });
+                        recordEntry(startDateOfCycle, _today);
                       },
                       style: ButtonStyle(
                         foregroundColor: WidgetStateProperty.all<Color>(textColor)
@@ -215,7 +234,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                child: Text('Previous Entry Date: $lastEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                child: Text('Previous Entry on: $lastEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
                 onPressed: () {
                   correctedEntryDate = lastEntry;
                   Navigator.of(context).pop(correctedEntryDate);
@@ -234,7 +253,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                child: Text('Current Entry Date: $thisEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                child: Text('Current Entry on: $thisEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
                 onPressed: () {
                   correctedEntryDate = thisEntry;
                   Navigator.of(context).pop(correctedEntryDate);

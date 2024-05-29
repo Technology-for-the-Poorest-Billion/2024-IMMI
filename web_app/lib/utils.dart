@@ -41,15 +41,13 @@ class CycleDataUtils {
     }
   }
 
-  static Map<String, String?> readAllCycleData() {
-    Map<String, String?> allData = {};
-    for (var key in _box.keys) {
-        // Keep the value as nullable
-        allData[key] = _box.get(key);
-    }
+  static Map<String, String> readAllCycleData() {
+    Map<String, String> allData = {};
+    _box.toMap().forEach((key, value) {
+        allData[key.toString()] = value;
+    });
     return allData;
   }
-
 }
 
 class DiaryDataUtils {

@@ -35,12 +35,26 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  void displayAllData() async {
-    Map<String, String?> allData = CycleDataUtils.readAllCycleData();
-    // Use the data in the UI, handling nulls appropriately
-    for (var entry in allData.entries) {
-        String displayValue = entry.value ?? "No data available";
-        print('Key: ${entry.key}, Value: $displayValue');
+  void updateCycleData(DateTime cycleStartDate, List<String> pastCycleStartDates, List<String> pastEntryDates) async {
+    if (pastCycleStartDates.isNotEmpty && pastEntryDates.isNotEmpty) {
+      // Convert the last start date from string to DateTime
+      DateTime lastStartDate = CycleDataUtils.stringToDate(pastCycleStartDates.last);
+
+      // Calculate the difference in days
+      int daysDifference = cycleStartDate.difference(lastStartDate).inDays;
+      print(daysDifference);
+
+      // Create the new entry string with the calculated days difference
+      String lastEntry = '$daysDifference ${pastCycleStartDates.last}';
+
+      // Get the key for the last entry
+      String lastKey = pastEntryDates.last;
+
+      // Delete the last entry
+      await CycleDataUtils.deleteLastEntry();
+
+      // Write the new data using the same last key
+      await CycleDataUtils.writeCycleData(lastKey, lastEntry);
     }
   }
 
@@ -50,19 +64,22 @@ class _HomePageState extends State<HomePage> {
     // Generate key from the entry date (using today's date)
     String entryKey = CycleDataUtils.dateToString(entryDate);
 
-    // Load past data
-    String? pastDataString = await CycleDataUtils.readCycleData(entryKey);
+    // Load all past data
+    Map<String, String> allData = CycleDataUtils.readAllCycleData();
     List<int> pastCycleLengths = [];
     List<String> pastCycleStartDates = [];
     List<String> pastEntryDates = [];
 
-    if (pastDataString != null) {
-      List<String> parts = pastDataString.split(' ');
-      if (parts.length >= 2) {
-        pastCycleLengths.add(int.parse(parts[0]));
-        pastCycleStartDates.add(parts[1]);
-        pastEntryDates.add(entryKey);
-      }
+    // Iterate over all entries
+    for (var entry in allData.entries) {
+        String entryKey = entry.key;
+        String? pastDataString = entry.value;
+        List<String> parts = pastDataString.split(' ');
+        if (parts.length >= 2) {
+            pastCycleLengths.add(int.parse(parts[0]));  // Assuming the first part is the cycle length
+            pastCycleStartDates.add(parts[1]);          // Assuming the second part is the start date
+            pastEntryDates.add(entryKey);               // The key is added as the entry date
+        }
     }
 
     // Check for repeated or preceded entries based on loaded data
@@ -75,13 +92,18 @@ class _HomePageState extends State<HomePage> {
 
       if (overrideStartDate != pastCycleStartDates.last) {
         // If the dialog returns a new start date, remove the last entry from each list
-        CycleDataUtils.deleteLastEntry();
+        await CycleDataUtils.deleteLastEntry();
+        pastCycleLengths.removeLast();
+        pastCycleStartDates.removeLast();
+        pastEntryDates.removeLast();
+        // Assign override date as the new cycle start date
+        cycleStartDate = CycleDataUtils.stringToDate(overrideStartDate);
       } else {
         // If no new date is chosen or it's the same, just return and do nothing
         return;
       }
     }
-
+    
     // int errorCounter = 0;
     // if(cycleStartDate.difference(CycleDataUtils.stringToDate(pastCycleStartDates.last)).inDays <= 0 && pastCycleStartDates.isNotEmpty) {
     //   print('here');
@@ -91,6 +113,7 @@ class _HomePageState extends State<HomePage> {
     // }
 
     // Update data 
+    updateCycleData(cycleStartDate, pastCycleStartDates, pastEntryDates);
 
     //predict new cycle length based on past cycle lengths
     int predLength = predictor.predictLength(pastCycleLengths);
@@ -178,7 +201,8 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     ElevatedButton(
                       onPressed: () async {
-                        recordEntry(startDateOfCycle, _today);
+                        // recordEntry(startDateOfCycle, _today);
+                        recordEntry(startDateOfCycle, _selectedDay!); // For testing
                       },
                       style: ButtonStyle(
                         foregroundColor: WidgetStateProperty.all<Color>(textColor)

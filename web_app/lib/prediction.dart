@@ -1,6 +1,3 @@
-import 'utils.dart';
-
-
 class CyclePredictor {
 
   static const int maxCycleLength = 99;
@@ -18,29 +15,29 @@ class CyclePredictor {
   static const double smoothingFactor = 0.1;
   static const String averageMethod = 'ma';
 
-  int movingAverage(List pastData) {
+  int movingAverage(List<int> pastData) {
     if (pastData.length < averageWindow) {
-      int listLength = pastData.length;
-      return (pastData.reduce((a,b)=>a+b) / listLength).round();
-    }
-    else {
-      int listLength = pastData.length;
-      List windowedList = pastData.sublist(listLength-averageWindow, listLength);
-      return (windowedList.reduce((a,b)=>a+b) / averageWindow).round();
+        // If the data list is shorter than the window, calculate average of the entire list
+        return (pastData.reduce((a, b) => a + b) / pastData.length).round();
+    } else {
+        // Otherwise, calculate average for the last `averageWindow` elements
+        int listLength = pastData.length;
+        List<int> windowedList = pastData.sublist(listLength - averageWindow, listLength);
+        return (windowedList.reduce((a, b) => a + b) / averageWindow).round();
     }
   }
 
-  int predictLength(List pastCycleLengths) {
+  int predictLength(List<int> pastCycleLengths) {
     if (pastCycleLengths.isEmpty) {
-      return defaultCycleLength;
+        return defaultCycleLength;
     }
     else {
-      if(averageMethod == 'ma') {
-        return movingAverage(pastCycleLengths);
-      }
-      else {
-        return 0;
-      }
+        if(averageMethod == 'ma') {
+            return movingAverage(pastCycleLengths);
+        }
+        else {
+            return 0;
+        }
     }
   }
 

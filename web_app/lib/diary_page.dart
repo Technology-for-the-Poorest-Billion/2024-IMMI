@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'storage_manager.dart'; // Import StorageUtil for handling data
+import 'utils.dart'; // Import StorageUtil for handling data
 
 
 class DiaryPage extends StatefulWidget {
@@ -11,6 +11,13 @@ class _DiaryPageState extends State<DiaryPage> {
   DateTime selectedDate = DateTime.now(); // Default to today's date
   TextEditingController diaryController = TextEditingController();
   late ScrollController  diaryScrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    diaryScrollController = ScrollController();
+    loadData();
+  }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -27,17 +34,10 @@ class _DiaryPageState extends State<DiaryPage> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    diaryScrollController = ScrollController();
-    loadData();
-  }
-
   void loadData() async {
     final dateStr = selectedDate.toLocal().toString().split(' ')[0];
     final key = 'entry_$dateStr';
-    String? diaryEntry = await StorageUtil.readData(key);
+    String? diaryEntry = await DiaryDataUtils.readData(key);
     if (diaryEntry != null) {
       setState(() {
         diaryController.text = diaryEntry;
@@ -94,7 +94,7 @@ class _DiaryPageState extends State<DiaryPage> {
                 final diaryText = diaryController.text;
                 print('Attempting to save data'); // Confirm this line is reached
                 try {
-                  await StorageUtil.writeData(key, diaryText);
+                  await DiaryDataUtils.writeData(key, diaryText);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Diary entry saved successfully!'))
                   );

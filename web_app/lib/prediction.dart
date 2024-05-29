@@ -1,6 +1,3 @@
-import 'utils.dart';
-
-
 class CyclePredictor {
 
   static const int maxCycleLength = 99;

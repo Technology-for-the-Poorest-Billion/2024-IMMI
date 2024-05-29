@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'utils.dart'; // Import StorageUtil for handling data
 
-
 class DiaryPage extends StatefulWidget {
   @override
   _DiaryPageState createState() => _DiaryPageState();

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class InfoPage extends StatelessWidget {
   final List<Map<String, dynamic>> stages = [
     {

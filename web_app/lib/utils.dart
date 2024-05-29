@@ -33,4 +33,21 @@ class CycleDataUtils {
     String entryDate = separated[2];
     return [cycleLength, cycleStartDate, entryDate];
   }
+
+  static Future<void> deleteLastEntry() async {
+    if (_box.isNotEmpty) {
+        var lastKey = _box.keys.last;
+        await _box.delete(lastKey);
+    }
+  }
+
+  static Map<String, String?> readAllCycleData() {
+    Map<String, String?> allData = {};
+    for (var key in _box.keys) {
+        // Keep the value as nullable
+        allData[key] = _box.get(key);
+    }
+    return allData;
+  }
+
 }

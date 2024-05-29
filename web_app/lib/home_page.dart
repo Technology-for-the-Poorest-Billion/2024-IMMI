@@ -37,6 +37,15 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  void displayAllData() async {
+    Map<String, String?> allData = CycleDataUtils.readAllCycleData();
+    // Use the data in the UI, handling nulls appropriately
+    for (var entry in allData.entries) {
+        String displayValue = entry.value ?? "No data available";
+        print('Key: ${entry.key}, Value: $displayValue');
+    }
+  }
+
   void recordEntry(DateTime cycleStartDate, DateTime entryDate) async {
     var predictor = CyclePredictor();
 
@@ -68,17 +77,12 @@ class _HomePageState extends State<HomePage> {
 
       if (overrideStartDate != pastCycleStartDates.last) {
         // If the dialog returns a new start date, remove the last entry from each list
-        if (pastCycleLengths.isNotEmpty) pastCycleLengths.removeLast();
-        if (pastCycleStartDates.isNotEmpty) pastCycleStartDates.removeLast();
-        if (pastEntryDates.isNotEmpty) pastEntryDates.removeLast();
+        CycleDataUtils.deleteLastEntry();
       } else {
         // If no new date is chosen or it's the same, just return and do nothing
         return;
       }
     }
-
-
-    
 
     // int errorCounter = 0;
     // if(cycleStartDate.difference(CycleDataUtils.stringToDate(pastCycleStartDates.last)).inDays <= 0 && pastCycleStartDates.isNotEmpty) {

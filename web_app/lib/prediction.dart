@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'utils.dart';
 
 
 class CyclePredictor {
@@ -15,19 +15,68 @@ class CyclePredictor {
   static const int beepAlertOn = 8;
   static const int beepAlertOff = 20;
   static const int averageWindow = 3;
+  static const double smoothingFactor = 0.1;
+  static const String averageMethod = 'ma';
+
+  int movingAverage(List pastData) {
+    if (pastData.length < averageWindow) {
+      int listLength = pastData.length;
+      return (pastData.reduce((a,b)=>a+b) / listLength).round();
+    }
+    else {
+      int listLength = pastData.length;
+      List windowedList = pastData.sublist(listLength-averageWindow, listLength);
+      return (windowedList.reduce((a,b)=>a+b) / averageWindow).round();
+    }
+  }
 
   int predictLength(List pastCycleLengths) {
     if (pastCycleLengths.isEmpty) {
       return defaultCycleLength;
     }
-    else if (pastCycleLengths.length < averageWindow) {
-      int listLength = pastCycleLengths.length;
-      return (pastCycleLengths.reduce((a,b)=>a+b) / listLength).round();
-    }
     else {
-      int listLength = pastCycleLengths.length;
-      List windowedList = pastCycleLengths.sublist(listLength-averageWindow, listLength);
-      return (windowedList.reduce((a,b)=>a+b) / averageWindow).round();
+      if(averageMethod == 'ma') {
+        return movingAverage(pastCycleLengths);
+      }
+      else {
+        return 0;
+      }
     }
   }
+
+  bool fertilityCheck(List pastCycleStartDates) {
+    DateTime now = DateTime.now();
+    DateTime thisCycleStartDate = DateTime.parse(pastCycleStartDates[pastCycleStartDates.length-1]);
+    int dayInCycle = now.difference(thisCycleStartDate).inDays;
+
+    if((dayInCycle >= fertileWindowStart) && (dayInCycle <= fertileWindowEnd)) {
+      return true;
+    }
+    return false;
+  }
+}
+
+bool checkRepeatedEntry(String newEntryDate, List pastEntryDates) {
+  if(newEntryDate == pastEntryDates[pastEntryDates.length-1]) {
+    return true;
+  }
+  return false;
+}
+
+bool checkPrecededEntry(String cycleStartDate, List pastCycleStartDates) {
+  if(cycleStartDate == pastCycleStartDates[pastCycleStartDates.length-1]) {
+    return true;
+  }
+  return false;
+}
+
+void main() {
+  var pastData = const <String, List> {
+    'cycleLengths': [1, 2],
+    'cycleStartDates': ['a', 'b'],
+    'entryDates': ['x', 'y']
+  };
+
+  List x = List.from(pastData['cycleLengths'] as List);
+  print(x);
 }

@@ -36,138 +36,6 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  // How to use textColor?
-  Future<String?> repetitionDialog(String lastEntry, String thisEntry) 
-  => showDialog<String>(
-    context: context,
-    builder: (context) => AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(26.0))),
-      title: SizedBox(
-        height: 30.0,
-        child: Text('Repetition Error', style: TextStyle(fontSize: 20.0, color: Colors.black)),
-      ),
-      content: SizedBox(
-        width: 400.0,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget> [
-            Text('Two dates are recorded today, please select which entry to keep.',
-              style: TextStyle(fontSize: 16.0, color: Colors.black)
-            ),
-            SizedBox(
-              height: 50,
-              child: TextButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(Colors.blue.shade100),
-                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      side: BorderSide(color: Colors.blue.shade200)
-                    ),
-                  ),
-                ),
-                child: Text('Previous Entry Date: $lastEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
-                onPressed: () {
-                  correctedEntryDate = lastEntry;
-                  Navigator.of(context).pop(correctedEntryDate);
-                },
-              ),
-            ),
-            SizedBox(
-              height: 50,
-              child: TextButton(
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.all(Colors.green.shade100),
-                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                      side: BorderSide(color: Colors.green.shade200)
-                    ),
-                  ),
-                ),
-                child: Text('Current Entry Date: $thisEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
-                onPressed: () {
-                  correctedEntryDate = thisEntry;
-                  Navigator.of(context).pop(correctedEntryDate);
-                },
-              ),
-            ),
-          ],
-        ),
-      ),  
-      actions: [
-        TextButton(
-          child: Text('Cancel', style: TextStyle(fontSize: 16.0, color: Colors.black)),
-          onPressed: () {
-            repetitionController.clear();
-            Navigator.of(context).pop();
-          },
-        ),
-      ],
-    ),
-  );
-
-  Future<String?> precedingDialog(String lastDate, String thisDate) 
-  => showDialog<String>(
-    context: context,
-    builder: (context) => AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(26.0))),
-      title: SizedBox(
-        height: 30.0,
-        child: Text('Preceding Error', style: TextStyle(fontSize: 20.0, color: Colors.black)),
-      ),
-      content: SizedBox(
-        width: 400.0,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget> [
-            Text('The date entered is invalid because it is earlier than the last recorded date, please retry.',
-              style: TextStyle(fontSize: 16.0, color: Colors.black)
-            ),
-            InkWell(
-              child: Container(
-                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
-                decoration: BoxDecoration(
-                  color: Colors.red.shade100,
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Text(
-                  'Last Cycle Started on: $lastDate',
-                  style: TextStyle(color: Colors.black),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-            TextField(
-              autofocus: true,
-              decoration: InputDecoration(hintText: 'Enter new start date of cycle: YYYY-MM-DD'),
-              controller: precedingController
-            ),
-          ],
-        ),
-      ),  
-      actions: [
-        TextButton(
-          child: Text('Cancel', style: TextStyle(fontSize: 16.0, color: Colors.black)),
-          onPressed: () {
-            precedingController.clear();
-            Navigator.of(context).pop();
-          },
-        ),
-        TextButton(
-          child: Text('Submit', style: TextStyle(fontSize: 16.0, color: Colors.black)),
-          onPressed: () {
-            Navigator.of(context).pop(precedingController.text);
-          },
-        ),
-      ],
-    ),
-  );
-
   void recordEntry(DateTime cycleStartDate, DateTime entryDate) async {
     var predictor = CyclePredictor();
 
@@ -223,6 +91,10 @@ class _HomePageState extends State<HomePage> {
     String formattedStartDate = DateFormat('MMM d, y').format(startDateOfCycle);
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+        backgroundColor: Color.fromARGB(255, 255, 217, 187),
+      ),
       body: Column(
         children: [
           SizedBox(height: 20.0), // Increased spacing here
@@ -312,20 +184,151 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-Widget buildCalendarWithLabel(DateTime date, Color textColor, Color backgroundColor) {
-  return Expanded(
-    child: Column(
-      children: [
-        Text(
-          DateFormat.yMMM().format(date),
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: textColor),
-          textAlign: TextAlign.center,
+  Future<String?> repetitionDialog(String lastEntry, String thisEntry) 
+  => showDialog<String>(
+    context: context,
+    builder: (context) => AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(26.0))),
+      title: SizedBox(
+        height: 30.0,
+        child: Text('Repetition Error', style: TextStyle(fontSize: 20.0, color: Colors.black)),
+      ),
+      content: SizedBox(
+        width: 400.0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget> [
+            Text('Two dates are recorded today, please select which entry to keep.',
+              style: TextStyle(fontSize: 16.0, color: Colors.black)
+            ),
+            SizedBox(
+              height: 50,
+              child: TextButton(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(Colors.blue.shade100),
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      side: BorderSide(color: Colors.blue.shade200)
+                    ),
+                  ),
+                ),
+                child: Text('Previous Entry Date: $lastEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                onPressed: () {
+                  correctedEntryDate = lastEntry;
+                  Navigator.of(context).pop(correctedEntryDate);
+                },
+              ),
+            ),
+            SizedBox(
+              height: 50,
+              child: TextButton(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(Colors.green.shade100),
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      side: BorderSide(color: Colors.green.shade200)
+                    ),
+                  ),
+                ),
+                child: Text('Current Entry Date: $thisEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                onPressed: () {
+                  correctedEntryDate = thisEntry;
+                  Navigator.of(context).pop(correctedEntryDate);
+                },
+              ),
+            ),
+          ],
         ),
-        _buildCalendar(date, backgroundColor, textColor, true),
+      ),  
+      actions: [
+        TextButton(
+          child: Text('Cancel', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+          onPressed: () {
+            repetitionController.clear();
+            Navigator.of(context).pop();
+          },
+        ),
       ],
     ),
   );
-}
+
+    Future<String?> precedingDialog(String lastDate, String thisDate) 
+  => showDialog<String>(
+    context: context,
+    builder: (context) => AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(26.0))),
+      title: SizedBox(
+        height: 30.0,
+        child: Text('Preceding Error', style: TextStyle(fontSize: 20.0, color: Colors.black)),
+      ),
+      content: SizedBox(
+        width: 400.0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget> [
+            Text('The date entered is invalid because it is earlier than the last recorded date, please retry.',
+              style: TextStyle(fontSize: 16.0, color: Colors.black)
+            ),
+            InkWell(
+              child: Container(
+                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                decoration: BoxDecoration(
+                  color: Colors.red.shade100,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Text(
+                  'Last Cycle Started on: $lastDate',
+                  style: TextStyle(color: Colors.black),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+            TextField(
+              autofocus: true,
+              decoration: InputDecoration(hintText: 'Enter new start date of cycle: YYYY-MM-DD'),
+              controller: precedingController
+            ),
+          ],
+        ),
+      ),  
+      actions: [
+        TextButton(
+          child: Text('Cancel', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+          onPressed: () {
+            precedingController.clear();
+            Navigator.of(context).pop();
+          },
+        ),
+        TextButton(
+          child: Text('Submit', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+          onPressed: () {
+            Navigator.of(context).pop(precedingController.text);
+          },
+        ),
+      ],
+    ),
+  );
+
+  Widget buildCalendarWithLabel(DateTime date, Color textColor, Color backgroundColor) {
+    return Expanded(
+      child: Column(
+        children: [
+          Text(
+            DateFormat.yMMM().format(date),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: textColor),
+            textAlign: TextAlign.center,
+          ),
+          _buildCalendar(date, backgroundColor, textColor, true),
+        ],
+      ),
+    );
+  }
 
   Widget _buildCalendar(DateTime date, Color backgroundColor, Color textColor, bool fullHeight) {
     var isDarkMode = Theme.of(context).brightness == Brightness.dark;

@@ -69,10 +69,10 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Period Tracker'),
-        backgroundColor: Colors.pink,
-      ),
+      // appBar: AppBar(
+      //   title: Text('Cycle Tracker'),
+      //   backgroundColor: Color.fromARGB(255, 255, 217, 187),
+      // ),
       body: IndexedStack(
         index: _selectedIndex,
         children: _widgetOptions(),

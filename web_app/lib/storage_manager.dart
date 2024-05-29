@@ -1,17 +1,31 @@
-import 'package:localstorage/localstorage.dart';
+import 'package:hive/hive.dart';
 
-class StorageManager {
-  static final LocalStorage storage = LocalStorage('my_app_data.json');
+class StorageUtil {
+  static Box<String> get _box => Hive.box<String>('diaryBox'); // Ensure Box<String> is used
 
-  static Future<void> initLocalStorage() async {
-    await storage.ready;
+  static Future<void> writeData(String key, String value) async {
+    try {
+      await _box.put(key, value);
+      print('Data saved');
+    } catch (e) {
+      print('Error saving data: $e');
+    }
   }
 
-  static Future<void> saveData(String key, String value) async {
-    await storage.setItem(key, value);
+  static String? readData(String key) {
+    try {
+      var data = _box.get(key);
+      print('Read data: $data');
+      return data;
+    } catch (e) {
+      print('Error reading data: $e');
+      return null;
+    }
   }
 
-  static String? loadData(String key) {
-    return storage.getItem(key);
+  static Map<String, String> getAllEntries() {
+    return Map.fromEntries(
+      _box.keys.cast<String>().map((key) => MapEntry(key, _box.get(key) ?? "No entry found"))
+    );
   }
 }

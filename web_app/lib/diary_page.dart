@@ -1,44 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:localstorage/localstorage.dart';
-import 'storage_manager.dart';
+import 'storage_manager.dart'; // Import StorageUtil for handling data
 
 class DiaryPage extends StatefulWidget {
-  final LocalStorage storage;  // Define a variable to hold the LocalStorage instance
-
-  DiaryPage({required this.storage});  // Modify constructor to accept LocalStorage
-
   @override
   _DiaryPageState createState() => _DiaryPageState();
 }
 
 class _DiaryPageState extends State<DiaryPage> {
-  DateTime selectedDate = DateTime.now();
+  DateTime selectedDate = DateTime.now(); // Default to today's date
   TextEditingController diaryController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    loadData(); // Load data for today's date on init
+  }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
+      firstDate: DateTime(2000), // Start date for date picker
+      lastDate: DateTime(2100), // End date for date picker
     );
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
       });
+      loadData();  // Load data for the new date after updating
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    loadData();
-  }
-
   void loadData() async {
-    // Assume the key 'diary_entry' is used to store the diary text
-    String key = 'diary_entry';
-    String? diaryEntry = await StorageManager.loadData(key);
+    final dateStr = selectedDate.toLocal().toString().split(' ')[0];
+    final key = 'entry_$dateStr';
+    String? diaryEntry = await StorageUtil.readData(key);
     if (diaryEntry != null) {
       setState(() {
         diaryController.text = diaryEntry;
@@ -77,20 +73,29 @@ class _DiaryPageState extends State<DiaryPage> {
                   border: OutlineInputBorder(),
                 ),
                 maxLines: null,
-                minLines: 10,
+                minLines: 10, // Gives a large area to write in
                 keyboardType: TextInputType.multiline,
               ),
             ),
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () async {
-                // Use a key that includes the date to distinguish entries by day
-                String key = 'diary_entry_${selectedDate.toIso8601String().split('T')[0]}';
-                String value = diaryController.text;  // Text from the TextFormField
-                await StorageManager.saveData(key, value);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Diary entry saved for ${selectedDate.toLocal().toString().split(' ')[0]}!'))
-                );
+                final dateStr = selectedDate.toLocal().toString().split(' ')[0];
+                final key = 'entry_$dateStr';
+                final diaryText = diaryController.text;
+                print('Attempting to save data'); // Confirm this line is reached
+                try {
+                  await StorageUtil.writeData(key, diaryText);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Diary entry saved successfully!'))
+                  );
+                  print('Diary entry saved'); // Confirm saving process
+                } catch (e) {
+                  print('Failed to save diary entry: $e'); // Check for errors
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text('Failed to save diary entry'))
+                  );
+                }
               },
               child: Text('Save Diary'),
             )

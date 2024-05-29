@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:localstorage/localstorage.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'data_page.dart';
 import 'diary_page.dart';
 import 'home_page.dart';
@@ -9,25 +9,18 @@ import 'setting_page.dart';
 import 'theme_provider.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Ensure plugins are initialized before runApp
-
-  // Initialize LocalStorage
-  final LocalStorage storage = LocalStorage('my_app_data.json');
-  await storage.ready;
-
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Box<String> box = await Hive.openBox<String>('diaryBox'); // Open as Box<String>
   runApp(
     ChangeNotifierProvider(
-      create: (_) => ThemeProvider(ThemeData.light()),  // Initialize with light theme
-      child: PeriodTrackerApp(storage: storage),  // Pass LocalStorage to the app
+      create: (_) => ThemeProvider(ThemeData.light()),
+      child: PeriodTrackerApp(),
     ),
   );
 }
 
 class PeriodTrackerApp extends StatelessWidget {
-  final LocalStorage storage;  // Add storage to your app class
-
-  PeriodTrackerApp({required this.storage});  // Accept storage in the constructor
-
   @override
   Widget build(BuildContext context) {
     // Accessing the ThemeProvider from the provider package
@@ -35,16 +28,12 @@ class PeriodTrackerApp extends StatelessWidget {
     return MaterialApp(
       title: 'Period Tracker',
       theme: themeProvider.themeData,
-      home: MainPage(storage: storage),  // Pass storage to MainPage
+      home: MainPage(),
     );
   }
 }
 
 class MainPage extends StatefulWidget {
-  final LocalStorage storage;  // Add storage to MainPage
-
-  MainPage({required this.storage});  // Accept storage in the constructor
-
   @override
   _MainPageState createState() => _MainPageState();
 }
@@ -58,9 +47,9 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  List<Widget> _widgetOptions() => <Widget>[
+  List<Widget> _widgetOptions = <Widget>[
     DataPage(),
-    DiaryPage(storage: widget.storage),  // Pass storage to DiaryPage
+    DiaryPage(),
     HomePage(),
     InfoPage(),
     SettingPage(),
@@ -75,7 +64,7 @@ class _MainPageState extends State<MainPage> {
       // ),
       body: IndexedStack(
         index: _selectedIndex,
-        children: _widgetOptions(),
+        children: _widgetOptions,
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

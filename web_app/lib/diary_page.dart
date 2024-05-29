@@ -15,9 +15,10 @@ class _DiaryPageState extends State<DiaryPage> {
   @override
   void initState() {
     super.initState();
-    loadData(); // Load data for today's date on init
+    diaryScrollController = ScrollController();
+    loadData();
   }
-
+  
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -31,13 +32,6 @@ class _DiaryPageState extends State<DiaryPage> {
       });
       loadData();  // Load data for the new date after updating
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    diaryScrollController = ScrollController();
-    loadData();
   }
 
   void loadData() async {

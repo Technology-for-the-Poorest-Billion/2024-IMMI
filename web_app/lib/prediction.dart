@@ -1,6 +1,3 @@
-import 'utils.dart';
-
-
 class CyclePredictor {
 
   static const int maxCycleLength = 99;
@@ -30,7 +27,6 @@ class CyclePredictor {
     }
   }
 
-
   int predictLength(List<int> pastCycleLengths) {
     if (pastCycleLengths.isEmpty) {
         return defaultCycleLength;
@@ -44,7 +40,6 @@ class CyclePredictor {
         }
     }
   }
-
 
   bool fertilityCheck(List pastCycleStartDates) {
     DateTime now = DateTime.now();

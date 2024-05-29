@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import 'storage_manager.dart';
 
+
 class DiaryPage extends StatefulWidget {
   final LocalStorage storage;  // Define a variable to hold the LocalStorage instance
 
@@ -14,6 +15,7 @@ class DiaryPage extends StatefulWidget {
 class _DiaryPageState extends State<DiaryPage> {
   DateTime selectedDate = DateTime.now();
   TextEditingController diaryController = TextEditingController();
+  late ScrollController  diaryScrollController;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -32,6 +34,7 @@ class _DiaryPageState extends State<DiaryPage> {
   @override
   void initState() {
     super.initState();
+    diaryScrollController = ScrollController();
     loadData();
   }
 
@@ -51,33 +54,40 @@ class _DiaryPageState extends State<DiaryPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Diary'),
-        backgroundColor: Colors.purple,
+        backgroundColor: Color.fromARGB(255, 255, 217, 187),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
+
+
           children: <Widget>[
-            ElevatedButton(
-              onPressed: () => _selectDate(context),
-              child: Text('Select Date'),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Selected Date: ${selectedDate.toLocal().toString().split(' ')[0]}',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            Row(
+              children: <Widget>[
+                ElevatedButton(
+                  onPressed: () => _selectDate(context),
+                  child: Text('Select Date', style: TextStyle(color: Colors.black)),
+                ),
+                SizedBox(width: 20),
+                Text(
+                  'Selected Date: ${selectedDate.toLocal().toString().split(' ')[0]}',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
+              ],
             ),
             SizedBox(height: 20),
             Expanded(
               child: TextFormField(
                 controller: diaryController,
+                scrollController: diaryScrollController,
+                autofocus: true,
                 decoration: InputDecoration(
                   labelText: 'Enter your diary',
                   border: OutlineInputBorder(),
                 ),
-                maxLines: null,
-                minLines: 10,
+                maxLines: 8,
                 keyboardType: TextInputType.multiline,
               ),
             ),
@@ -92,7 +102,7 @@ class _DiaryPageState extends State<DiaryPage> {
                   SnackBar(content: Text('Diary entry saved for ${selectedDate.toLocal().toString().split(' ')[0]}!'))
                 );
               },
-              child: Text('Save Diary'),
+              child: Text('Save Diary', style: TextStyle(color: Colors.black)),
             )
           ],
         ),

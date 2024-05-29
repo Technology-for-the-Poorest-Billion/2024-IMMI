@@ -12,12 +12,6 @@ class _DiaryPageState extends State<DiaryPage> {
   TextEditingController diaryController = TextEditingController();
   late ScrollController  diaryScrollController;
 
-  @override
-  void initState() {
-    super.initState();
-    loadData(); // Load data for today's date on init
-  }
-
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -63,8 +57,6 @@ class _DiaryPageState extends State<DiaryPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
-
-
           children: <Widget>[
             Row(
               children: <Widget>[
@@ -94,6 +86,7 @@ class _DiaryPageState extends State<DiaryPage> {
               ),
             ),
             SizedBox(height: 20),
+            
             ElevatedButton(
               onPressed: () async {
                 final dateStr = selectedDate.toLocal().toString().split(' ')[0];

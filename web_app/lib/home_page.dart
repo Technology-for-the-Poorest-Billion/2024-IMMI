@@ -35,52 +35,17 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  void updateCycleData(DateTime cycleStartDate, List<String> pastCycleStartDates, List<String> pastEntryDates) async {
-    if (pastCycleStartDates.isNotEmpty && pastEntryDates.isNotEmpty) {
-      // Convert the last start date from string to DateTime
-      DateTime lastStartDate = CycleDataUtils.stringToDate(pastCycleStartDates.last);
-
-      // Calculate the difference in days
-      int daysDifference = cycleStartDate.difference(lastStartDate).inDays;
-      print(daysDifference);
-
-      // Create the new entry string with the calculated days difference
-      String lastEntry = '$daysDifference ${pastCycleStartDates.last}';
-
-      // Get the key for the last entry
-      String lastKey = pastEntryDates.last;
-
-      // Delete the last entry
-      await CycleDataUtils.deleteLastEntry();
-
-      // Write the new data using the same last key
-      await CycleDataUtils.writeCycleData(lastKey, lastEntry);
-    }
-  }
-
   void recordEntry(DateTime cycleStartDate, DateTime entryDate) async {
     var predictor = CyclePredictor();
 
     // Generate key from the entry date (using today's date)
     String entryKey = CycleDataUtils.dateToString(entryDate);
 
-    // Load all past data
-    Map<String, String> allData = CycleDataUtils.readAllCycleData();
-    List<int> pastCycleLengths = [];
-    List<String> pastCycleStartDates = [];
-    List<String> pastEntryDates = [];
-
-    // Iterate over all entries
-    for (var entry in allData.entries) {
-        String entryKey = entry.key;
-        String? pastDataString = entry.value;
-        List<String> parts = pastDataString.split(' ');
-        if (parts.length >= 2) {
-            pastCycleLengths.add(int.parse(parts[0]));  // Assuming the first part is the cycle length
-            pastCycleStartDates.add(parts[1]);          // Assuming the second part is the start date
-            pastEntryDates.add(entryKey);               // The key is added as the entry date
-        }
-    }
+    // Load data
+    CycleData cycleData = await CycleDataUtils.loadData();
+    List<int> pastCycleLengths = cycleData.cycleLengths;
+    List<String> pastCycleStartDates = cycleData.startDates;
+    List<String> pastEntryDates = cycleData.entryDates;
 
     // Check for repeated or preceded entries based on loaded data
     bool repeated = pastEntryDates.contains(CycleDataUtils.dateToString(entryDate));
@@ -104,16 +69,33 @@ class _HomePageState extends State<HomePage> {
       }
     }
     
-    // int errorCounter = 0;
-    // if(cycleStartDate.difference(CycleDataUtils.stringToDate(pastCycleStartDates.last)).inDays <= 0 && pastCycleStartDates.isNotEmpty) {
-    //   print('here');
-    //   final correctedStartDate = await precedingDialog(pastCycleStartDates.last, CycleDataUtils.dateToString(cycleStartDate));
-    //   if (correctedStartDate == null || correctedStartDate.isEmpty) return;
-    //   cycleStartDate = CycleDataUtils.stringToDate(correctedStartDate);
-    // }
+    if(pastCycleStartDates.isNotEmpty) {
+      int precedingCounter = 0;
+      bool invalidDate = false;
+      while(cycleStartDate.difference(CycleDataUtils.stringToDate(pastCycleStartDates.last)).inDays <= 0 || invalidDate == true) {
+        print('here');
+        if (precedingCounter >= 3) {
+          return;
+        }
+        final correctedStartDate = await precedingDialog(pastCycleStartDates.last, CycleDataUtils.dateToString(cycleStartDate));
+        if (correctedStartDate == null || correctedStartDate.isEmpty) return;
+
+        invalidDate = DateTime.tryParse(correctedStartDate) == null;
+        if(invalidDate == true){
+          precedingCounter ++;
+          continue;
+        }
+        cycleStartDate = CycleDataUtils.stringToDate(correctedStartDate);
+        precedingCounter ++;
+      }
+    }
+    
 
     // Update data 
-    updateCycleData(cycleStartDate, pastCycleStartDates, pastEntryDates);
+    CycleDataUtils.updateCycleData(cycleStartDate, pastCycleStartDates, pastEntryDates);
+
+    cycleData = await CycleDataUtils.loadData();
+    pastCycleLengths = cycleData.cycleLengths;
 
     //predict new cycle length based on past cycle lengths
     int predLength = predictor.predictLength(pastCycleLengths);
@@ -137,7 +119,8 @@ class _HomePageState extends State<HomePage> {
     ].map((color) => isDarkMode ? color.withOpacity(0.3) : color).toList();
 
     // Calculate the start date of the cycle
-    DateTime startDateOfCycle = DateTime(_today.year, _today.month, _today.day).subtract(Duration(days: _currentDay - 1));
+    // DateTime startDateOfCycle = DateTime(_today.year, _today.month, _today.day).subtract(Duration(days: _currentDay - 1));
+    DateTime startDateOfCycle = DateTime(_selectedDay!.year, _selectedDay!.month, _selectedDay!.day).subtract(Duration(days: _currentDay - 1)); // For testing
 
     // Format the start date to a more readable form, e.g., Jan 28, 2024
     String formattedStartDate = DateFormat('MMM d, y').format(startDateOfCycle);
@@ -334,11 +317,21 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+
+
+            // change to select date
+
             TextField(
               autofocus: true,
               decoration: InputDecoration(hintText: 'Enter new start date of cycle: YYYY-MM-DD'),
               controller: precedingController
             ),
+
+
+
+
+
+
           ],
         ),
       ),  

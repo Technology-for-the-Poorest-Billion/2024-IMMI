@@ -1,5 +1,13 @@
 import 'package:hive/hive.dart';
 
+class CycleData {
+  List<int> cycleLengths;
+  List<String> startDates;
+  List<String> entryDates;
+
+  CycleData(this.cycleLengths, this.startDates, this.entryDates);
+}
+
 class CycleDataUtils {
   static Box<String> get _box => Hive.box<String>('cycleData');
 
@@ -41,12 +49,65 @@ class CycleDataUtils {
     }
   }
 
-  static Map<String, String> readAllCycleData() {
+  static Future<Map<String, String>> readAllCycleData() async {
     Map<String, String> allData = {};
-    _box.toMap().forEach((key, value) {
-        allData[key.toString()] = value;
+    // Ensure _box is awaited if it's a future or requires async operation to initialize
+    var boxMap = await _box.toMap();  // Make sure to await if necessary, depends on your Hive setup
+    boxMap.forEach((key, value) {
+        allData[key.toString()] = value.toString(); // Ensuring the value is also a string
     });
     return allData;
+}
+
+  static Future<CycleData> loadData() async {
+    // Load all past data
+    Map<String, String> allData = await readAllCycleData();
+    List<int> pastCycleLengths = [];
+    List<String> pastCycleStartDates = [];
+    List<String> pastEntryDates = [];
+
+    // Iterate over all entries
+    for (var entry in allData.entries) {
+        String entryKey = entry.key;
+        String? pastDataString = entry.value;
+        List<String> parts = pastDataString.split(' ');
+        if (parts.length >= 2) {
+            pastCycleLengths.add(int.parse(parts[0]));  // Assuming the first part is the cycle length
+            pastCycleStartDates.add(parts[1]);          // Assuming the second part is the start date
+            pastEntryDates.add(entryKey);               // The key is added as the entry date
+        }
+    }
+
+    return CycleData(pastCycleLengths, pastCycleStartDates, pastEntryDates);
+}
+
+  static Future<void> updateCycleData(DateTime cycleStartDate, List<String> pastCycleStartDates, List<String> pastEntryDates) async {
+    if (pastCycleStartDates.isNotEmpty && pastEntryDates.isNotEmpty) {
+      try {
+        // Convert the last start date from string to DateTime
+        DateTime lastStartDate = stringToDate(pastCycleStartDates.last);
+
+        // Calculate the difference in days
+        int daysDifference = cycleStartDate.difference(lastStartDate).inDays;
+
+        // Create the new entry string with the calculated days difference
+        String lastEntry = '$daysDifference ${pastCycleStartDates.last}';
+
+        // Get the key for the last entry
+        String lastKey = pastEntryDates.last;
+
+        // Ensure deletion of the last entry is completed before adding new data
+        deleteLastEntry();  // Make sure this function actually waits for the DB operation to complete
+
+        // Write the new data using the same last key
+        writeCycleData(lastKey, lastEntry);
+      } catch (e) {
+          print('Error updating cycle data: $e');
+          throw Exception('Failed to update cycle data: $e');  // Optional: rethrow to handle higher up
+      }
+    }else {
+      print("No data to update");
+    }
   }
 }
 

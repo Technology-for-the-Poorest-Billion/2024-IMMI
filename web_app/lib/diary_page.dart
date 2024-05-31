@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'utils.dart'; // Import StorageUtil for handling data
+import 'utils.dart';
 
 class DiaryPage extends StatefulWidget {
   @override
@@ -42,6 +42,9 @@ class _DiaryPageState extends State<DiaryPage> {
         diaryController.text = diaryEntry;
       });
     }
+    else {
+      diaryController.clear();
+    }
   }
 
   @override
@@ -56,8 +59,6 @@ class _DiaryPageState extends State<DiaryPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
-
-
           children: <Widget>[
             Row(
               children: <Widget>[

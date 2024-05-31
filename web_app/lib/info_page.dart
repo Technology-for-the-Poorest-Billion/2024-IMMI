@@ -378,7 +378,7 @@ class FaqSection extends StatelessWidget {
               ],
             ),
           );
-        }).toList(),
+        }),
       ],
     );
   }

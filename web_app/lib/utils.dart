@@ -1,4 +1,6 @@
 import 'package:hive/hive.dart';
+import 'new_diary_page.dart';
+
 
 class CycleData {
   List<int> cycleLengths;
@@ -138,5 +140,32 @@ class DiaryDataUtils {
     return Map.fromEntries(
       _box.keys.cast<String>().map((key) => MapEntry(key, _box.get(key) ?? "No entry found"))
     );
+  }
+
+  static Future<void> deleteNote(String key) async {
+    if(_box.keys.contains(key)) {
+      await _box.delete(key);
+    }
+  }
+
+  static Future<List<Note>> getAllNotes() async {
+    Map<String, String> allData = {};
+    List<Note> pastData = [];
+
+    var boxMap = await _box.toMap();
+    boxMap.forEach((key, value) {
+      allData[key.toString()] = value.toString();
+    });
+
+    for(String key in allData.keys) {
+      String title = allData[key]!.split('////')[0];
+      String description = allData[key]!.split('////')[1];
+      pastData.add(Note(
+        title: title,
+        description: description,
+        notedate: CycleDataUtils.stringToDate(key)
+      ));
+    }
+    return pastData;
   }
 }

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'data_page.dart';
-import 'diary_page.dart';
+import 'new_diary_page.dart';
 import 'home_page.dart';
 import 'info_page.dart';
 import 'setting_page.dart';
 import 'theme_provider.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

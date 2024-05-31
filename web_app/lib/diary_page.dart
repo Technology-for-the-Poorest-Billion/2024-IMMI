@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'utils.dart'; // Import StorageUtil for handling data
+import 'utils.dart';
 
 
 class DiaryPage extends StatefulWidget {
@@ -42,6 +42,9 @@ class _DiaryPageState extends State<DiaryPage> {
       setState(() {
         diaryController.text = diaryEntry;
       });
+    }
+    else {
+      diaryController.clear();
     }
   }
 
@@ -86,7 +89,6 @@ class _DiaryPageState extends State<DiaryPage> {
               ),
             ),
             SizedBox(height: 20),
-            
             ElevatedButton(
               onPressed: () async {
                 final dateStr = selectedDate.toLocal().toString().split(' ')[0];

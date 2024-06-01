@@ -5,7 +5,8 @@ This will go through each of the pages on the website and what each page does.
 (insert image of home page)
 
 <p align="center">
-<img width="900" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/df0dc2ae-28b3-404f-b6e9-13098267d19e">
+  <img width="900" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/df0dc2ae-28b3-404f-b6e9-13098267d19e">
+  <figcaption>Partners</figcaption>
 </p>
 
 On the Home page, 3 months will be visible, the current month, previous month and the next month. You can select which day of the cycle you think you're on
@@ -18,8 +19,12 @@ display your most fertile window using blue dots on those dates.
 ### Information Page
 (Insert image of Info page)
 
-![Info1tiny](https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/db94ac51-be89-454b-9b35-cf3666a43bfc)
-![Info2tiny](https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/6afbf63c-bed4-4d0d-95ce-ec835884d84b)
+<p align="center">
+  <img width="500" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/aae7794b-e4e4-47a2-afe1-fbee2dd7bd9b">
+  <img width="500" src="![Info2](https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/41d70ee7-181a-4ed1-a327-1614171f8e9d)
+">
+  <figcaption>Partners</figcaption>
+</p>
 
 The Info page is used the educate users about each stage of the menstrual cycle and how each stage effects you biologically, emotionally and physically and how 
 certain foods and exercise would help with your symptoms in each stage. Theres a Symptoms and Tips section so you can learn whats normal when you're on 

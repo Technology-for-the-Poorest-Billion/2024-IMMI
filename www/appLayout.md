@@ -21,8 +21,7 @@ display your most fertile window using blue dots on those dates.
 
 <p align="center">
   <img width="500" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/aae7794b-e4e4-47a2-afe1-fbee2dd7bd9b">
-  <img width="500" src="![Info2](https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/41d70ee7-181a-4ed1-a327-1614171f8e9d)
-">
+  <img width="500" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/41d70ee7-181a-4ed1-a327-1614171f8e9d">
   <figcaption>Partners</figcaption>
 </p>
 

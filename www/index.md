@@ -39,7 +39,7 @@ This is a [link](linkedpage.md) to interesting content.
 
 Which results in:
 
-This is a [link](http://localhost:60583/) to interesting content.
+This is a [link](Period Tracker.html) to interesting content.
 
 - Pay attention to the header of the markdown files in this section. It contains a title section that you will need to reproduce for each page to render them properly.
 

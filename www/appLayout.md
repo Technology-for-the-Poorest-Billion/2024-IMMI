@@ -4,7 +4,7 @@ This will go through each of the pages on the website and what each page does.
 ### Home Page
 (insert image of home page)
 
-![Home_Page2](https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/3e0ba1be-9ef2-4f59-a9d8-f15b8cc697d1) align ="centre"
+<src = ![Home_Page2](https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/3e0ba1be-9ef2-4f59-a9d8-f15b8cc697d1) align ="centre">
 
 On the Home page, 3 months will be visible, the current month, previous month and the next month. You can select which day of the cycle you think you're on
 at the moment or probably what's easiest is selecting the date you know you started your first period on, change the Day of Cycle to display 1, and

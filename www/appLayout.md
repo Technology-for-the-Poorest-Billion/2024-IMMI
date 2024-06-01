@@ -5,7 +5,7 @@ This will go through each of the pages on the website and what each page does.
 (insert image of home page)
 
 <p align="center">
-<img src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/3e0ba1be-9ef2-4f59-a9d8-f15b8cc697d1">
+<img width="900" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/df0dc2ae-28b3-404f-b6e9-13098267d19e">
 </p>
 
 On the Home page, 3 months will be visible, the current month, previous month and the next month. You can select which day of the cycle you think you're on

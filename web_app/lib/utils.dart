@@ -1,5 +1,6 @@
 import 'package:hive/hive.dart';
 import 'new_diary_page.dart';
+import 'data_page.dart';
 
 
 class CycleData {
@@ -51,6 +52,10 @@ class CycleDataUtils {
     }
   }
 
+  static Future<void> deleteAllEntry() async {
+    await _box.clear();
+  }
+
   static Future<Map<String, String>> readAllCycleData() async {
     Map<String, String> allData = {};
     // Ensure _box is awaited if it's a future or requires async operation to initialize
@@ -59,7 +64,29 @@ class CycleDataUtils {
         allData[key.toString()] = value.toString(); // Ensuring the value is also a string
     });
     return allData;
-}
+  }
+
+  static Future<List<TableCycleData>> getAllCycleData() async {
+    Map<String, String> allData = {};
+    List<TableCycleData> pastData = [];
+
+    // Ensure _box is awaited if it's a future or requires async operation to initialize
+    var boxMap = await _box.toMap();  // Make sure to await if necessary, depends on your Hive setup
+    boxMap.forEach((key, value) {
+        allData[key.toString()] = value.toString(); // Ensuring the value is also a string
+    });
+
+    for(String key in allData.keys) {
+      String cycleLength = allData[key]!.split(' ')[0];
+      String cycleStartDate = allData[key]!.split(' ')[1];
+      pastData.add(TableCycleData(
+        entryDate: key,
+        cycleStartDate: cycleStartDate,
+        cycleLength: cycleLength
+      ));
+    }
+    return pastData;
+  }
 
   static Future<CycleData> loadData() async {
     // Load all past data

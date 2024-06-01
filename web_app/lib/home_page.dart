@@ -187,6 +187,9 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () async {
                         // recordEntry(startDateOfCycle, _today);
                         recordEntry(startDateOfCycle, _selectedDay!); // For testing
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Date recorded successfully!'))
+                        );
                       },
                       style: ButtonStyle(
                         foregroundColor: WidgetStateProperty.all<Color>(textColor)

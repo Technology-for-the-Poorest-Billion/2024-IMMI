@@ -1,6 +1,7 @@
 # App Layout
 ## Home Page
-insert image of home page
+(insert image of home page)
+
 On the Home page, 3 months will be visible, the current month, previous month and the next month. You can select which day of the cycle you think you're on
 at the moment or probably what's easiest is selecting the date you know you started your first period on, change the Day of Cycle to display 1, and
 click record. However, if you miss the start day of your period, you can change the Day of Cycle to whichever day it is and click record to update.

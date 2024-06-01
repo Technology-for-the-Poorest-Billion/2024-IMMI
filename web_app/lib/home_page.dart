@@ -152,16 +152,16 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             onPressed: () {
               setState(() {});
-              refreshData();
+              jumpToToday();
             },
-            icon: const Icon(Icons.refresh)
+            icon: const Icon(Icons.today)
           ),
           IconButton(
             onPressed: () {
               setState(() {});
-              jumpToToday();
+              refreshData();
             },
-            icon: const Icon(Icons.today)
+            icon: const Icon(Icons.refresh)
           )
         ],
       ),

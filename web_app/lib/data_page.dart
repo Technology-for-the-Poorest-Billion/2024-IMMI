@@ -37,14 +37,14 @@ class _DataPageState extends State<DataPage> {
                     onPressed: () {
                       Navigator.pop(context);
                       CycleDataUtils.deleteAllEntry();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Data cleared successfully!'))
+                      );
                     },
                     child: const Text('Yes')
                   )
                 ],
               ));
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Data cleared successfully!'))
-              );
             }, 
             child: Text('Clear All', style: TextStyle(fontSize: 16.0, color: Colors.black)),
           ),

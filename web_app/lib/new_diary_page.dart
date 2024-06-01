@@ -182,6 +182,9 @@ class _AddNoteScreenState extends State<AddNoteScreen> {
                     onPressed: () {
                       Navigator.pop(context);
                       _deleteNote();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Diary deleted successfully!'))
+                      );
                     },
                     child: const Text('Yes')
                   )

@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'data_page.dart';
-import 'new_diary_page.dart';
+import 'diary_page.dart';
 import 'home_page.dart';
 import 'info_page.dart';
 import 'setting_page.dart';
 import 'theme_provider.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,25 +23,20 @@ void main() async {
   );
 }
 
-class PeriodTrackerApp extends StatelessWidget {
+class PeriodTrackerApp extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    // Accessing the ThemeProvider from the provider package
-    final themeProvider = Provider.of<ThemeProvider>(context);
-    return MaterialApp(
-      title: 'Period Tracker',
-      theme: themeProvider.themeData,
-      home: MainPage(),
-    );
+  _MenstrualCycleHomePageState createState() => _MenstrualCycleHomePageState();
+}
+
+class _MenstrualCycleHomePageState extends State<PeriodTrackerApp> {
+  Locale _locale = Locale('en');
+
+  void _setLocale(Locale locale) {
+    setState(() {
+      _locale = locale;
+    });
   }
-}
 
-class MainPage extends StatefulWidget {
-  @override
-  _MainPageState createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
   int _selectedIndex = 2;
 
   void _onItemTapped(int index) {
@@ -49,54 +45,70 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
-  List<Widget> _widgetOptions = <Widget>[
-    DataPage(),
-    DiaryPage(),
-    HomePage(),
-    InfoPage(),
-    SettingPage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   title: Text('Cycle Tracker'),
-      //   backgroundColor: Color.fromARGB(255, 255, 217, 187),
-      // ),
-      body: IndexedStack(
-        index: _selectedIndex,
-        children: _widgetOptions,
+    // Accessing the ThemeProvider from the provider package
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    List<Widget> _widgetOptions = <Widget>[
+      DataPage(),
+      DiaryPage(),
+      HomePage(),
+      InfoPage(),
+      SettingPage(onLocaleChange: _setLocale),
+    ];
+    return MaterialApp(
+      title: 'Period Tracker',
+      theme: themeProvider.themeData,
+      locale: _locale,
+      supportedLocales: [
+        Locale('en', ''),
+        Locale('es', ''),
+      ],
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      home: Scaffold(
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: _widgetOptions,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.analytics),
+              label: 'Data',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.book),
+              label: 'Diary',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.info),
+              label: 'Info',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'Setting',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.pink,
+          unselectedItemColor: Colors.grey,
+          onTap: _onItemTapped,
+          type: BottomNavigationBarType.fixed,
+        ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.analytics),
-            label: 'Data',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.book),
-            label: 'Diary',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.info),
-            label: 'Info',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Setting',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.pink,
-        unselectedItemColor: Colors.grey,
-        onTap: _onItemTapped,
-        type: BottomNavigationBarType.fixed,
-      ),
+      routes: {
+        '/settings': (context) => SettingPage(onLocaleChange: _setLocale),
+        '/info': (context) => InfoPage(),
+      },
     );
   }
 }

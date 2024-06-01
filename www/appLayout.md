@@ -16,8 +16,8 @@ display your most fertile window using blue dots on those dates.
 ### Information Page
 (Insert image of Info page)
 
-![Info1small](https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/d561d9b2-1163-4c82-89df-6447b44157e7) ![Info2small](https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/fbd30d70-54cd-4ac9-aec5-ba5ea9b59fb9)
-
+![Info1tiny](https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/db94ac51-be89-454b-9b35-cf3666a43bfc)
+![Info2tiny](https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/6afbf63c-bed4-4d0d-95ce-ec835884d84b)
 
 The Info page is used the educate users about each stage of the menstrual cycle and how each stage effects you biologically, emotionally and physically and how 
 certain foods and exercise would help with your symptoms in each stage. Theres a Symptoms and Tips section so you can learn whats normal when you're on 

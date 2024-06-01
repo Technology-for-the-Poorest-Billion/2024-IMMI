@@ -3,6 +3,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:web_app/prediction.dart';
 import 'utils.dart';
+import 'app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -127,7 +128,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text(AppLocalizations.of(context)!.translate('home_title') ?? 'home_title'),
         backgroundColor: Color.fromARGB(255, 255, 217, 187),
       ),
       body: Column(
@@ -156,13 +157,13 @@ class _HomePageState extends State<HomePage> {
                       style: ButtonStyle(
                         foregroundColor: WidgetStateProperty.all<Color>(textColor)
                       ),
-                      child: const Text('Reset'),
+                      child: Text(AppLocalizations.of(context)!.translate('reset') ?? 'Reset'),
                     ),
                   ],
                 ),
                 Column(
                   children: [
-                    Text('Current Day of Cycle', style: TextStyle(fontSize: 18.0, color: textColor)),
+                    Text(AppLocalizations.of(context)!.translate('CurrentDayTitle') ?? 'Current Day of Cycle', style: TextStyle(fontSize: 18.0, color: textColor)),
                     Row(
                       children: [
                         IconButton(icon: Icon(Icons.remove, color: textColor), onPressed: () {
@@ -190,7 +191,7 @@ class _HomePageState extends State<HomePage> {
                       style: ButtonStyle(
                         foregroundColor: WidgetStateProperty.all<Color>(textColor)
                       ),
-                      child: const Text('Record'),
+                      child: Text(AppLocalizations.of(context)!.translate('record') ?? 'Record'),
                     ),
                   ],
                 ),

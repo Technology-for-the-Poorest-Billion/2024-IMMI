@@ -14,9 +14,9 @@ display your most fertile window using blue dots on those dates.
 
 ### Information Page
 (Insert image of Info page)
-<figure markdown>
+
   ![Info1](https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/7a49c5cc-7f35-47c5-a88c-ee9d0aa37859) ![Info2](https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/4113777d-06ef-4d95-88d8-59741dde05bd)
-</figure>
+
 
 The Info page is used the educate users about each stage of the menstrual cycle and how each stage effects you biologically, emotionally and physically and how 
 certain foods and exercise would help with your symptoms in each stage. Theres a Symptoms and Tips section so you can learn whats normal when you're on 

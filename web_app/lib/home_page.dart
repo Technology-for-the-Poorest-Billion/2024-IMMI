@@ -3,6 +3,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:web_app/prediction.dart';
 import 'utils.dart';
+import 'app_localizations.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -109,7 +110,6 @@ class _HomePageState extends State<HomePage> {
       }
     }
     
-
     // Update data 
     CycleDataUtils.updateCycleData(cycleStartDate, pastCycleStartDates, pastEntryDates);
 
@@ -124,6 +124,9 @@ class _HomePageState extends State<HomePage> {
 
     // Save the new data to Hive
     await CycleDataUtils.writeCycleData(entryKey, newEntry);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Date recorded successfully!'))
+    );
   }
 
   @override
@@ -146,7 +149,7 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text(AppLocalizations.of(context)!.translate('home_title') ?? 'home_title'),
         backgroundColor: Color.fromARGB(255, 255, 217, 187),
       ),
       body: Column(
@@ -176,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                       style: ButtonStyle(
                         foregroundColor: WidgetStateProperty.all<Color>(textColor)
                       ),
-                      child: const Text('Reset'),
+                      child: Text(AppLocalizations.of(context)!.translate('reset') ?? 'Reset'),
                     ),
                   ],
                 ),
@@ -235,7 +238,7 @@ class _HomePageState extends State<HomePage> {
                       style: ButtonStyle(
                         foregroundColor: WidgetStateProperty.all<Color>(textColor)
                       ),
-                      child: const Text('Record'),
+                      child: Text(AppLocalizations.of(context)!.translate('record') ?? 'Record'),
                     ),
                   ],
                 ),
@@ -288,7 +291,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                child: Text('Previous Entry on: $lastEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                child: Text('Previous Entry is: $lastEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
                 onPressed: () {
                   correctedEntryDate = lastEntry;
                   Navigator.of(context).pop(correctedEntryDate);
@@ -307,7 +310,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                child: Text('Current Entry on: $thisEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                child: Text('Current Entry is: $thisEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
                 onPressed: () {
                   correctedEntryDate = thisEntry;
                   Navigator.of(context).pop(correctedEntryDate);

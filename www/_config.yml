@@ -1,7 +1,7 @@
-title: Cool project 2024
+title: IMMI Period Tracker Website
 
 author:
-  name: Student name 1, Student name 2, etc.
+  name: Rosie Clifton, Charles Cai, Barry Gao
 
 # The `>` after `description:` means to ignore line-breaks until next key.
 # If you want to omit the line-break after the end of text, use `>-` instead.
@@ -9,6 +9,8 @@ description: >
   Write an awesome description for your new site here. You can edit this line
   in _config.yml. It will appear in your document head meta (for Google search
   results) and in your feed.xml site description.
+  Take a look at our new website created to help educate and manage your menstrual cycle. This website will show how the IMMI Period Tracker was created and 
+  will explain how to use it.
 
 # Build settings
 

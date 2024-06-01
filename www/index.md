@@ -3,9 +3,8 @@ title: Landing page of the website
 ---
 
 ## Introduction
-
-
-Bla bla bla.
+IMMI helps to manage and educate about your menstrual cycle by creating an informative website in which you can track your period.
+All you need to do is input what day of your cycle you're on and your current 
 
 
 ### To configure your website:

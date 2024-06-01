@@ -8,7 +8,7 @@
 
 ## Problems We Solve
 ❗Low awareness of menstrual cycle <br />
-❗ Existing methods for raising awareness and/or providing assistance (e.g. tracking apps) have exhibited negligence toward data privacy <br />
+❗Existing methods for raising awareness and/or providing assistance (e.g. tracking apps) have exhibited negligence toward data privacy <br />
 <br />
 
 <h3 align="center">

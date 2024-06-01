@@ -1,13 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'theme_provider.dart';
+import 'app_localizations.dart';
 
-class SettingPage extends StatelessWidget {
+
+class SettingPage extends StatefulWidget {
+  final Function(Locale) onLocaleChange;
+
+  SettingPage({required this.onLocaleChange});
+
+  @override
+  _SettingsPageState createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingPage> {
+  String? _selectedLanguage;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedLanguage = 'en'; // Default to English
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: Text(AppLocalizations.of(context)!.translate('settings_title') ?? 'Settings'),
         backgroundColor: Color.fromARGB(255, 255, 217, 187),
       ),
       body: Center(
@@ -20,6 +38,28 @@ class SettingPage extends StatelessWidget {
             ),
             SwitchButton(),  // Assuming you have a switch widget for toggling dark mode
             SizedBox(height: 20),
+            Text(AppLocalizations.of(context)!.translate('language') ?? 'Language'),
+            DropdownButton<String>(
+              value: _selectedLanguage,
+              items: [
+                DropdownMenuItem(
+                  value: 'en',
+                  child: Text(AppLocalizations.of(context)!.translate('english') ?? 'English'),
+                ),
+                DropdownMenuItem(
+                  value: 'es',
+                  child: Text(AppLocalizations.of(context)!.translate('spanish') ?? 'Spanish'),
+                ),
+              ],
+              onChanged: (String? newValue) {
+                setState(() {
+                  _selectedLanguage = newValue;
+                  if (newValue != null) {
+                    widget.onLocaleChange(Locale(newValue));
+                  }
+                });
+              },
+            ),
             // Additional buttons
             StyledButton(title: 'Button 1', onPressed: () {}),
             SizedBox(height: 10),
@@ -78,3 +118,4 @@ class SwitchButton extends StatelessWidget {
     );
   }
 }
+

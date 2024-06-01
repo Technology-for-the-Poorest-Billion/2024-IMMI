@@ -5,7 +5,7 @@ This will go through each of the pages on the website and what each page does.
 (insert image of home page)
 
 <p align="center">
-  <img width="800" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/df0dc2ae-28b3-404f-b6e9-13098267d19e">
+  <img width="700" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/df0dc2ae-28b3-404f-b6e9-13098267d19e">
 </p>
 
 On the Home page, 3 months will be visible, the current month, previous month and the next month. You can select which day of the cycle you think you're on
@@ -19,8 +19,8 @@ display your most fertile window using blue dots on those dates.
 (Insert image of Info page)
 
 <p align="center">
-  <img width="500" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/aae7794b-e4e4-47a2-afe1-fbee2dd7bd9b">
-  <img width="500" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/41d70ee7-181a-4ed1-a327-1614171f8e9d">
+  <img width="400" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/aae7794b-e4e4-47a2-afe1-fbee2dd7bd9b">
+  <img width="400" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/41d70ee7-181a-4ed1-a327-1614171f8e9d">
 </p>
 
 The Info page is used the educate users about each stage of the menstrual cycle and how each stage effects you biologically, emotionally and physically and how 
@@ -31,14 +31,14 @@ your period. There's an About IMMI section where you can learn about the company
 (Insert image of Diary page)
 
 <p align="center">
-  <img width="800" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/86e1c3b9-f9dd-445f-a7e1-54b8b04d4391">
+  <img width="700" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/86e1c3b9-f9dd-445f-a7e1-54b8b04d4391">
 </p>
 
 The Diary page is used to keep a log of how you are feeling on each day of your period. You simply add an entry by clicking the plus button in the bottom right hand corner which will then open an entry for the 
 current date. 
 
 <p align="center">
-  <img width="800" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/8c2d1c70-011c-4448-94af-da7f5f4deb2f">
+  <img width="700" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/8c2d1c70-011c-4448-94af-da7f5f4deb2f">
 </p>
 
 

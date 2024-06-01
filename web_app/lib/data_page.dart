@@ -18,8 +18,9 @@ class _DataPageState extends State<DataPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Data'),
+        title: Text('Data', style: TextStyle(color: Colors.black)),
         backgroundColor: Color.fromARGB(255, 255, 217, 187),
+        centerTitle: true,
         actions: [
           TextButton(
             onPressed: () {

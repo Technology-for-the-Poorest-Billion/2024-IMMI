@@ -6,6 +6,7 @@ This will go through each of the pages on the website and what each page does.
 
 <p align="center">
   <img width="900" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/df0dc2ae-28b3-404f-b6e9-13098267d19e">
+  
   Caption
 </p>
 
@@ -32,12 +33,17 @@ your period. There's an About IMMI section where you can learn about the company
 ### Diary Page
 (Insert image of Diary page)
 
-![Diary_Page2](https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/e9b31af1-5c65-4644-aa9d-2f264bd6328a)
+<p align="center">
+  <img width="900" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/86e1c3b9-f9dd-445f-a7e1-54b8b04d4391">
+</p>
 
 The Diary page is used to keep a log of how you are feeling on each day of your period. You simply add an entry by clicking the plus button in the bottom right hand corner which will then open an entry for the 
 current date. 
 
-![Diary2resize](https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/5c096145-73a7-4022-b187-aad0fc6b15c4)
+<p align="center">
+  <img width="900" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/8c2d1c70-011c-4448-94af-da7f5f4deb2f">
+</p>
+
 
 Once you've entered your thoughts and feelings for the day, just click the tick icon in the top right corner and go back to the diary page and click the refresh button in the top right corner. The Diary page
 should update with your entry which you can edit whenever. The data is stored privately on the web browser which only you have access to. This data will be available to see on the data page.

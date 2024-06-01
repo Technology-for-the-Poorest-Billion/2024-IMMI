@@ -6,12 +6,13 @@ class InfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Determine text color based on theme
-    Color textColor = Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black;
+    Color textColor = Theme.of(context).brightness == Brightness.dark ? Colors.red: Colors.black;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.translate('info_title') ?? 'Information'),
+        title: Text(AppLocalizations.of(context)!.translate('info_title') ?? 'Information', style: TextStyle(color: Colors.black)),
         backgroundColor: Color.fromARGB(255, 255, 217, 187),
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(

@@ -20,8 +20,9 @@ class _DiaryPageState extends State<DiaryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Diary'),
+        title: Text('Diary', style: TextStyle(color: Colors.black)),
         backgroundColor: Color.fromARGB(255, 255, 217, 187),
+        centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {

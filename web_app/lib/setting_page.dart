@@ -25,8 +25,9 @@ class _SettingsPageState extends State<SettingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.translate('settings_title') ?? 'Settings'),
+        title: Text(AppLocalizations.of(context)!.translate('settings_title') ?? 'Settings', style: TextStyle(color: Colors.black)),
         backgroundColor: Color.fromARGB(255, 255, 217, 187),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
@@ -60,14 +61,6 @@ class _SettingsPageState extends State<SettingPage> {
                 });
               },
             ),
-            // Additional buttons
-            StyledButton(title: 'Button 1', onPressed: () {}),
-            SizedBox(height: 10),
-            StyledButton(title: 'Button 2', onPressed: () {}),
-            SizedBox(height: 10),
-            StyledButton(title: 'Button 3', onPressed: () {}),
-            SizedBox(height: 10),
-            StyledButton(title: 'Button 4', onPressed: () {}),
           ],
         ),
       ),

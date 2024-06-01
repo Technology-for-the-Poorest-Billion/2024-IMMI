@@ -124,6 +124,9 @@ class _HomePageState extends State<HomePage> {
 
     // Save the new data to Hive
     await CycleDataUtils.writeCycleData(entryKey, newEntry);
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Date recorded successfully!'))
+    );
   }
 
   @override
@@ -146,8 +149,9 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text('Home', style: TextStyle(color: Colors.black)),
         backgroundColor: Color.fromARGB(255, 255, 217, 187),
+        centerTitle: true,
         actions: [
           IconButton(
             onPressed: () {
@@ -280,7 +284,7 @@ class _HomePageState extends State<HomePage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(26.0))),
       title: SizedBox(
         height: 30.0,
-        child: Text('Repetition Error', style: TextStyle(fontSize: 20.0, color: Colors.black)),
+        child: Text('Repetition Error', style: TextStyle(fontSize: 20.0, color: Colors.red[700])),
       ),
       content: SizedBox(
         width: 400.0,
@@ -290,7 +294,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget> [
             Text('Two dates are recorded today, please select which entry to keep.',
-              style: TextStyle(fontSize: 16.0, color: Colors.black)
+              style: TextStyle(fontSize: 16.0, color: Colors.red[700])
             ),
             SizedBox(
               height: 50,
@@ -304,7 +308,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                child: Text('Previous Entry on: $lastEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                child: Text('Previous Entry is: $lastEntry', style: TextStyle(fontSize: 16.0, color: Colors.red[700])),
                 onPressed: () {
                   correctedEntryDate = lastEntry;
                   Navigator.of(context).pop(correctedEntryDate);
@@ -323,7 +327,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                child: Text('Current Entry on: $thisEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                child: Text('Current Entry is: $thisEntry', style: TextStyle(fontSize: 16.0, color: Colors.red[700])),
                 onPressed: () {
                   correctedEntryDate = thisEntry;
                   Navigator.of(context).pop(correctedEntryDate);
@@ -335,7 +339,7 @@ class _HomePageState extends State<HomePage> {
       ),  
       actions: [
         TextButton(
-          child: Text('Cancel', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+          child: Text('Cancel', style: TextStyle(fontSize: 16.0, color: Colors.red[700])),
           onPressed: () {
             repetitionController.clear();
             Navigator.of(context).pop();
@@ -345,14 +349,14 @@ class _HomePageState extends State<HomePage> {
     ),
   );
 
-    Future<String?> precedingDialog(String lastDate, String thisDate) 
+  Future<String?> precedingDialog(String lastDate, String thisDate) 
   => showDialog<String>(
     context: context,
     builder: (context) => AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(26.0))),
       title: SizedBox(
         height: 30.0,
-        child: Text('Preceding Error', style: TextStyle(fontSize: 20.0, color: Colors.black)),
+        child: Text('Preceding Error', style: TextStyle(fontSize: 20.0, color: Colors.red[700])),
       ),
       content: SizedBox(
         width: 400.0,
@@ -362,7 +366,7 @@ class _HomePageState extends State<HomePage> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget> [
             Text('The date entered is invalid because it is earlier than the last recorded date, please retry.',
-              style: TextStyle(fontSize: 16.0, color: Colors.black)
+              style: TextStyle(fontSize: 16.0, color: Colors.red[700])
             ),
             InkWell(
               child: Container(
@@ -373,7 +377,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: Text(
                   'Last Cycle Started on: $lastDate',
-                  style: TextStyle(color: Colors.black),
+                  style: TextStyle(color: Colors.red[700]),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -390,14 +394,14 @@ class _HomePageState extends State<HomePage> {
       ),  
       actions: [
         TextButton(
-          child: Text('Cancel', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+          child: Text('Cancel', style: TextStyle(fontSize: 16.0, color: Colors.red[700])),
           onPressed: () {
             precedingController.clear();
             Navigator.of(context).pop();
           },
         ),
         TextButton(
-          child: Text('Submit', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+          child: Text('Submit', style: TextStyle(fontSize: 16.0, color: Colors.red[700])),
           onPressed: () {
             Navigator.of(context).pop(precedingController.text);
           },
@@ -628,5 +632,4 @@ class _HomePageState extends State<HomePage> {
       _cycleDataFuture = CycleDataUtils.loadData();
     });
   }
-
 }

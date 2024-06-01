@@ -1,5 +1,5 @@
-# App Layout
-## Home Page
+## App Layout
+### Home Page
 (insert image of home page)
 
 On the Home page, 3 months will be visible, the current month, previous month and the next month. You can select which day of the cycle you think you're on
@@ -9,5 +9,5 @@ The default cycle length will be 28 days but if this isnt correct for you, the a
 input information. The calender will display the predicted period dates with red dots so you know what date your next period will start. The calender will also
 display your most fertile window using blue dots on those dates.
 
-## Information Page
+### Information Page
 

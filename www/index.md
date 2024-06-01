@@ -14,7 +14,7 @@ expressing concern. The IMMI Period Tracker has been developed with this in mind
 
 ## How to use the IMMI Period Tracker
 We have a step-by-step demonstration of the main functions of the website.
-this can be found at this [link](linkedpage.md) to the website layout page.
+this can be found at this [link](appLayout.md) to the website layout page.
 
 ## How the Website was developed
 

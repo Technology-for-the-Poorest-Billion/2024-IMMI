@@ -1,10 +1,17 @@
 ---
-title: Landing page of the website
+title: IMMI Period Tracker Information
 ---
 
 ## Introduction
 IMMI helps to manage and educate about your menstrual cycle by creating an informative website in which you can track your period.
-All you need to do is input what day of your cycle you're on and your current 
+We will run you through how to use the website, how the website was put together and why this website is needed and a useful tool.
+
+## Why the website is needed
+
+
+
+## How to use the IMMI Period Tracker
+
 
 
 ### To configure your website:
@@ -27,7 +34,7 @@ This is a [link](linkedpage.md) to interesting content.
 
 Which results in:
 
-This is a [link]((http://localhost:60583/)) to interesting content.
+This is a [link][http://localhost:60583/]to interesting content.
 
 - Pay attention to the header of the markdown files in this section. It contains a title section that you will need to reproduce for each page to render them properly.
 

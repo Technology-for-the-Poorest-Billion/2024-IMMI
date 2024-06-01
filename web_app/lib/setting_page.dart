@@ -8,7 +8,7 @@ class SettingPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings'),
-        backgroundColor: Colors.purple,
+        backgroundColor: Color.fromARGB(255, 255, 217, 187),
       ),
       body: Center(
         child: Column(
@@ -78,4 +78,3 @@ class SwitchButton extends StatelessWidget {
     );
   }
 }
-

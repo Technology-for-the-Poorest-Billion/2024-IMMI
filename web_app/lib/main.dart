@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'data_page.dart';
-import 'diary_page.dart';
+import 'new_diary_page.dart';
 import 'home_page.dart';
 import 'info_page.dart';
 import 'setting_page.dart';
-import 'theme_provider.dart'; 
+import 'theme_provider.dart';
 
-void main() {
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  await Hive.openBox<String>('cycleData');  // Open a new box for cycle data
+  await Hive.openBox<String>('diaryBox');
   runApp(
     ChangeNotifierProvider(
-      create: (_) => ThemeProvider(ThemeData.light()),  // Initialize with light theme
+      create: (_) => ThemeProvider(ThemeData.light()),
       child: PeriodTrackerApp(),
     ),
   );
@@ -23,7 +29,7 @@ class PeriodTrackerApp extends StatelessWidget {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
       title: 'Period Tracker',
-      theme: themeProvider.themeData,  // Corrected from 'theme' to 'themeData'
+      theme: themeProvider.themeData,
       home: MainPage(),
     );
   }
@@ -54,10 +60,10 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Period Tracker'),
-        backgroundColor: Colors.pink,  // Adjusted to match your theme
-      ),
+      // appBar: AppBar(
+      //   title: Text('Cycle Tracker'),
+      //   backgroundColor: Color.fromARGB(255, 255, 217, 187),
+      // ),
       body: IndexedStack(
         index: _selectedIndex,
         children: _widgetOptions,

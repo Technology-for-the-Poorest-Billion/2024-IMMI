@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
-import 'dart:convert';
+import 'package:web_app/prediction.dart';
+import 'utils.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,278 +12,408 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
+  DateTime _today = DateTime.now();
   DateTime? _selectedDay;
-  DateTime? _periodStartDate;
-  List<DateTime> _predictedPeriods = [];
-  TextEditingController _noteController = TextEditingController();
-  Map<String, String> _notes = {};
-  int _cycleLength = 28;
   int _currentDay = 1;
+  late TextEditingController precedingController;
+  late TextEditingController repetitionController;
+  String correctedEntryDate = '';
+  String correctedStartDate = '';
 
   @override
   void initState() {
     super.initState();
     _selectedDay = DateTime.now();  // Initialize _selectedDay
-    _loadNotes();
+    repetitionController = TextEditingController();
+    precedingController = TextEditingController();
   }
 
-  Future<void> _loadNotes() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      _notes = Map<String, String>.from(json.decode(prefs.getString('notes') ?? '{}'));
-    });
+  @override
+  void dispose() {
+    repetitionController.dispose();
+    precedingController.dispose();
+    super.dispose();
   }
 
-  Future<void> _saveNotes() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('notes', json.encode(_notes));
-  }
+  void recordEntry(DateTime cycleStartDate, DateTime entryDate) async {
+    var predictor = CyclePredictor();
 
-  void _goToToday() {
-    setState(() {
-      _focusedDay = DateTime.now();
-      _selectedDay = DateTime.now();
-      _noteController.text = _notes[_focusedDay.toIso8601String()] ?? '';
-    });
-  }
+    // Generate key from the entry date (using today's date)
+    String entryKey = CycleDataUtils.dateToString(entryDate);
 
-  Future<void> _selectPeriodStartDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _focusedDay,
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
-    if (picked != null && picked != _periodStartDate) {
-      setState(() {
-        _periodStartDate = picked;
-        print('Selected Period Start Date: $_periodStartDate');
-        _calculatePredictedPeriods();
-      });
-    }
-  }
+    // Load data
+    CycleData cycleData = await CycleDataUtils.loadData();
+    List<int> pastCycleLengths = cycleData.cycleLengths;
+    List<String> pastCycleStartDates = cycleData.startDates;
+    List<String> pastEntryDates = cycleData.entryDates;
 
-  void _calculatePredictedPeriods() {
-    _predictedPeriods.clear();
-    if (_periodStartDate != null) {
-      DateTime nextPeriod = _periodStartDate!;
-      while (nextPeriod.isBefore(DateTime.now().add(Duration(days: 365)))) {
-        _predictedPeriods.add(nextPeriod);
-        nextPeriod = nextPeriod.add(Duration(days: _cycleLength));
+    // Check for repeated or preceded entries based on loaded data
+    bool repeated = pastEntryDates.contains(CycleDataUtils.dateToString(entryDate));
+    if (repeated) {
+      // Show a dialog to confirm the change of the start date
+      final overrideStartDate = await repetitionDialog(pastCycleStartDates.last, CycleDataUtils.dateToString(cycleStartDate));
+      
+      if (overrideStartDate == null || overrideStartDate.isEmpty) return;
+
+      if (overrideStartDate != pastCycleStartDates.last) {
+        // If the dialog returns a new start date, remove the last entry from each list
+        await CycleDataUtils.deleteLastEntry();
+        pastCycleLengths.removeLast();
+        pastCycleStartDates.removeLast();
+        pastEntryDates.removeLast();
+        // Assign override date as the new cycle start date
+        cycleStartDate = CycleDataUtils.stringToDate(overrideStartDate);
+      } else {
+        // If no new date is chosen or it's the same, just return and do nothing
+        return;
       }
-      print('Predicted Period Dates: $_predictedPeriods');
     }
-  }
+    
+    if(pastCycleStartDates.isNotEmpty) {
+      int precedingCounter = 0;
+      bool invalidDate = false;
+      while(cycleStartDate.difference(CycleDataUtils.stringToDate(pastCycleStartDates.last)).inDays <= 0 || invalidDate == true) {
+        print('here');
+        if (precedingCounter >= 3) {
+          return;
+        }
+        final correctedStartDate = await precedingDialog(pastCycleStartDates.last, CycleDataUtils.dateToString(cycleStartDate));
+        if (correctedStartDate == null || correctedStartDate.isEmpty) return;
 
-  bool _isSameDay(DateTime a, DateTime b) {
-    return a.year == b.year && a.month == b.month && a.day == b.day;
+        invalidDate = DateTime.tryParse(correctedStartDate) == null;
+        if(invalidDate == true){
+          precedingCounter ++;
+          continue;
+        }
+        cycleStartDate = CycleDataUtils.stringToDate(correctedStartDate);
+        precedingCounter ++;
+      }
+    }
+    
+
+    // Update data 
+    CycleDataUtils.updateCycleData(cycleStartDate, pastCycleStartDates, pastEntryDates);
+
+    cycleData = await CycleDataUtils.loadData();
+    pastCycleLengths = cycleData.cycleLengths;
+
+    //predict new cycle length based on past cycle lengths
+    int predLength = predictor.predictLength(pastCycleLengths);
+
+    // Create new entry string
+    String newEntry = '$predLength ${CycleDataUtils.dateToString(cycleStartDate)}';
+
+    // Save the new data to Hive
+    await CycleDataUtils.writeCycleData(entryKey, newEntry);
   }
 
   @override
   Widget build(BuildContext context) {
+    // Adjust colors dynamically based on theme
+    var isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    var textColor = isDarkMode ? Colors.white : Colors.black;
+    var calendarBackgroundColor = [
+      Colors.lightBlue.shade50,
+      Colors.lightGreen.shade50,
+      Colors.pink.shade50
+    ].map((color) => isDarkMode ? color.withOpacity(0.3) : color).toList();
+
+    // Calculate the start date of the cycle
+    // DateTime startDateOfCycle = DateTime(_today.year, _today.month, _today.day).subtract(Duration(days: _currentDay - 1));
+    DateTime startDateOfCycle = DateTime(_selectedDay!.year, _selectedDay!.month, _selectedDay!.day).subtract(Duration(days: _currentDay - 1)); // For testing
+
+    // Format the start date to a more readable form, e.g., Jan 28, 2024
+    String formattedStartDate = DateFormat('MMM d, y').format(startDateOfCycle);
+
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Home'),
+        backgroundColor: Color.fromARGB(255, 255, 217, 187),
+      ),
       body: Column(
         children: [
+          SizedBox(height: 20.0), // Increased spacing here
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(vertical: 30.0),
+            child: Center(
+              child: Text('Start Date of Cycle: $formattedStartDate', style: TextStyle(fontSize: 18.0, color: textColor)),
+            ),
+          ),
+          SizedBox(height: 20.0), // Increased spacing here
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
                   children: [
-                    Text(
-                      'Average Cycle Length',
-                      style: TextStyle(fontSize: 18.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          _currentDay = 1;
+                        });
+                      },
+                      style: ButtonStyle(
+                        foregroundColor: WidgetStateProperty.all<Color>(textColor)
+                      ),
+                      child: const Text('Reset'),
                     ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Text('Current Day of Cycle', style: TextStyle(fontSize: 18.0, color: textColor)),
                     Row(
                       children: [
-                        IconButton(
-                          icon: Icon(Icons.remove),
-                          onPressed: () {
-                            setState(() {
-                              if (_cycleLength > 1) _cycleLength--;
-                              _calculatePredictedPeriods();
-                            });
-                          },
-                        ),
-                        Text(
-                          '$_cycleLength days',
-                          style: TextStyle(fontSize: 18.0),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.add),
-                          onPressed: () {
-                            setState(() {
-                              _cycleLength++;
-                              _calculatePredictedPeriods();
-                            });
-                          },
-                        ),
+                        IconButton(icon: Icon(Icons.remove, color: textColor), onPressed: () {
+                          setState(() {
+                            if (_currentDay > 1) _currentDay--;
+                          });
+                        }),
+                        Text('Day $_currentDay', style: TextStyle(fontSize: 18.0, color: textColor)),
+                        IconButton(icon: Icon(Icons.add, color: textColor), onPressed: () {
+                          setState(() {
+                            _currentDay++;
+                          });
+                        }),
                       ],
                     ),
                   ],
                 ),
                 Column(
                   children: [
-                    Text(
-                      'Current Day of Cycle',
-                      style: TextStyle(fontSize: 18.0),
-                    ),
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: Icon(Icons.remove),
-                          onPressed: () {
-                            setState(() {
-                              if (_currentDay > 1) _currentDay--;
-                            });
-                          },
-                        ),
-                        Text(
-                          'Day $_currentDay',
-                          style: TextStyle(fontSize: 18.0),
-                        ),
-                        IconButton(
-                          icon: Icon(Icons.add),
-                          onPressed: () {
-                            setState(() {
-                              _currentDay++;
-                            });
-                          },
-                        ),
-                      ],
+                    ElevatedButton(
+                      onPressed: () async {
+                        // recordEntry(startDateOfCycle, _today);
+                        recordEntry(startDateOfCycle, _selectedDay!); // For testing
+                      },
+                      style: ButtonStyle(
+                        foregroundColor: WidgetStateProperty.all<Color>(textColor)
+                      ),
+                      child: const Text('Record'),
                     ),
                   ],
                 ),
               ],
             ),
           ),
-          SizedBox(height: 20.0),
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        '${DateFormat.yMMM().format(DateTime(_focusedDay.year, _focusedDay.month - 1, 1))}',
-                        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        '${DateFormat.yMMM().format(_focusedDay)}',
-                        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      alignment: Alignment.center,
-                      child: Text(
-                        '${DateFormat.yMMM().format(DateTime(_focusedDay.year, _focusedDay.month + 1, 1))}',
-                        style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 10.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildCalendar(DateTime(_focusedDay.year, _focusedDay.month - 1, 1), Colors.lightBlue.shade50, true),
-                  _buildCalendar(_focusedDay, Colors.lightGreen.shade50, true),
-                  _buildCalendar(DateTime(_focusedDay.year, _focusedDay.month + 1, 1), Colors.pink.shade50, true),
-                ],
-              ),
-            ],
+          SizedBox(height: 30.0), // Increased spacing here
+          Expanded(
+            child: Row(
+              children: [
+                buildCalendarWithLabel(DateTime(_focusedDay.year, _focusedDay.month - 1, 1), textColor, calendarBackgroundColor[0]),
+                buildCalendarWithLabel(_focusedDay, textColor, calendarBackgroundColor[1]),
+                buildCalendarWithLabel(DateTime(_focusedDay.year, _focusedDay.month + 1, 1), textColor, calendarBackgroundColor[2]),
+              ],
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildCalendar(DateTime date, Color backgroundColor, bool fullHeight) {
-    return Expanded(
-      child: Container(
-        color: backgroundColor,
-        margin: const EdgeInsets.symmetric(horizontal: 8.0),
-        padding: const EdgeInsets.symmetric(vertical: 10.0),
+  Future<String?> repetitionDialog(String lastEntry, String thisEntry) 
+  => showDialog<String>(
+    context: context,
+    builder: (context) => AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(26.0))),
+      title: SizedBox(
+        height: 30.0,
+        child: Text('Repetition Error', style: TextStyle(fontSize: 20.0, color: Colors.black)),
+      ),
+      content: SizedBox(
+        width: 400.0,
         child: Column(
-          children: [
-            TableCalendar(
-              firstDay: DateTime.utc(date.year, date.month, 1),
-              lastDay: DateTime.utc(date.year, date.month + 1, 0),
-              focusedDay: date,
-              calendarFormat: _calendarFormat,
-              daysOfWeekStyle: DaysOfWeekStyle(
-                dowTextFormatter: (date, locale) => DateFormat.E(locale).format(date).substring(0, 1),
-              ),
-              headerVisible: false,
-              selectedDayPredicate: (day) {
-                return _isSameDay(_selectedDay!, day);
-              },
-              onDaySelected: (selectedDay, focusedDay) {
-                setState(() {
-                  _selectedDay = selectedDay;
-                  _focusedDay = focusedDay;
-                  _noteController.text = _notes[selectedDay.toIso8601String()] ?? '';
-                });
-              },
-              onFormatChanged: (format) {
-                if (_calendarFormat != format) {
-                  setState(() {
-                    _calendarFormat = format;
-                  });
-                }
-              },
-              onPageChanged: (focusedDay) {
-                _focusedDay = focusedDay;
-              },
-              calendarBuilders: CalendarBuilders(
-                markerBuilder: (context, day, focusedDay) {
-                  if (_predictedPeriods.any((predictedDate) => _isSameDay(predictedDate, day))) {
-                    return Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.5),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Text(
-                        '${day.day}',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    );
-                  }
-                  return null;
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget> [
+            Text('Two dates are recorded today, please select which entry to keep.',
+              style: TextStyle(fontSize: 16.0, color: Colors.black)
+            ),
+            SizedBox(
+              height: 50,
+              child: TextButton(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(Colors.blue.shade100),
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      side: BorderSide(color: Colors.blue.shade200)
+                    ),
+                  ),
+                ),
+                child: Text('Previous Entry on: $lastEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                onPressed: () {
+                  correctedEntryDate = lastEntry;
+                  Navigator.of(context).pop(correctedEntryDate);
                 },
               ),
-              calendarStyle: CalendarStyle(
-                todayDecoration: BoxDecoration(
-                  color: Colors.blue.shade200,
-                  shape: BoxShape.circle,
-                ),
-                selectedDecoration: BoxDecoration(
-                  color: Colors.pink.shade200,
-                  shape: BoxShape.circle,
-                ),
-                defaultTextStyle: TextStyle(fontSize: 16),
-                weekendTextStyle: TextStyle(fontSize: 16),
-              ),
-              daysOfWeekHeight: 25.0,
-              rowHeight: 40.0,
             ),
-            if (fullHeight) ...List.generate(6 - _getWeekCount(date), (index) => SizedBox(height: 40.0)),
+            SizedBox(
+              height: 50,
+              child: TextButton(
+                style: ButtonStyle(
+                  backgroundColor: WidgetStateProperty.all(Colors.green.shade100),
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                      side: BorderSide(color: Colors.green.shade200)
+                    ),
+                  ),
+                ),
+                child: Text('Current Entry on: $thisEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                onPressed: () {
+                  correctedEntryDate = thisEntry;
+                  Navigator.of(context).pop(correctedEntryDate);
+                },
+              ),
+            ),
           ],
         ),
+      ),  
+      actions: [
+        TextButton(
+          child: Text('Cancel', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+          onPressed: () {
+            repetitionController.clear();
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    ),
+  );
+
+    Future<String?> precedingDialog(String lastDate, String thisDate) 
+  => showDialog<String>(
+    context: context,
+    builder: (context) => AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(26.0))),
+      title: SizedBox(
+        height: 30.0,
+        child: Text('Preceding Error', style: TextStyle(fontSize: 20.0, color: Colors.black)),
+      ),
+      content: SizedBox(
+        width: 400.0,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget> [
+            Text('The date entered is invalid because it is earlier than the last recorded date, please retry.',
+              style: TextStyle(fontSize: 16.0, color: Colors.black)
+            ),
+            InkWell(
+              child: Container(
+                padding: EdgeInsets.only(top: 20.0, bottom: 20.0),
+                decoration: BoxDecoration(
+                  color: Colors.red.shade100,
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
+                child: Text(
+                  'Last Cycle Started on: $lastDate',
+                  style: TextStyle(color: Colors.black),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+
+
+            // change to select date
+
+            TextField(
+              autofocus: true,
+              decoration: InputDecoration(hintText: 'Enter new start date of cycle: YYYY-MM-DD'),
+              controller: precedingController
+            ),
+
+
+
+
+
+
+          ],
+        ),
+      ),  
+      actions: [
+        TextButton(
+          child: Text('Cancel', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+          onPressed: () {
+            precedingController.clear();
+            Navigator.of(context).pop();
+          },
+        ),
+        TextButton(
+          child: Text('Submit', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+          onPressed: () {
+            Navigator.of(context).pop(precedingController.text);
+          },
+        ),
+      ],
+    ),
+  );
+
+  Widget buildCalendarWithLabel(DateTime date, Color textColor, Color backgroundColor) {
+    return Expanded(
+      child: Column(
+        children: [
+          Text(
+            DateFormat.yMMM().format(date),
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: textColor),
+            textAlign: TextAlign.center,
+          ),
+          _buildCalendar(date, backgroundColor, textColor, true),
+        ],
       ),
     );
+  }
+
+  Widget _buildCalendar(DateTime date, Color backgroundColor, Color textColor, bool fullHeight) {
+    var isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    var todayColor = isDarkMode ? Colors.blue[900] : Colors.blue[200];
+    var selectedColor = isDarkMode ? Colors.pink[900] : Colors.pink[200];
+
+    return Container(
+      color: backgroundColor,
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Column(
+        children: [
+          TableCalendar(
+            firstDay: DateTime.utc(date.year, date.month, 1),
+            lastDay: DateTime.utc(date.year, date.month + 1, 0),
+            focusedDay: date,
+            calendarFormat: _calendarFormat,
+            daysOfWeekStyle: DaysOfWeekStyle(
+              weekdayStyle: TextStyle(color: textColor),  // Use textColor for weekdays
+              weekendStyle: TextStyle(color: textColor),  // Use textColor for weekends
+              dowTextFormatter: (date, locale) => DateFormat.E(locale).format(date).substring(0, 1),
+            ),
+            headerVisible: false,
+            selectedDayPredicate: (day) => _isSameDay(_selectedDay!, day),
+            onDaySelected: (selectedDay, focusedDay) {
+              setState(() {
+                _selectedDay = selectedDay;
+                _focusedDay = focusedDay;
+              });
+            },
+            calendarStyle: CalendarStyle(
+              todayDecoration: BoxDecoration(color: todayColor, shape: BoxShape.circle),
+              selectedDecoration: BoxDecoration(color: selectedColor, shape: BoxShape.circle),
+              defaultTextStyle: TextStyle(fontSize: 16, color: textColor),
+              weekendTextStyle: TextStyle(fontSize: 16, color: textColor),
+            ),
+            daysOfWeekHeight: 25.0,
+            rowHeight: 40.0,
+          ),
+          if (fullHeight) ...List.generate(6 - _getWeekCount(date), (index) => SizedBox(height: 40.0)),
+        ],
+      ),
+    );
+  }
+
+  bool _isSameDay(DateTime a, DateTime b) {
+    return a.year == b.year && a.month == b.month && a.day == b.day;
   }
 
   int _getWeekCount(DateTime date) {

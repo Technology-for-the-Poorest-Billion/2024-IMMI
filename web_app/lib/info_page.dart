@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class InfoPage extends StatelessWidget {
   final List<Map<String, dynamic>> stages = [
     {
@@ -126,6 +125,10 @@ class InfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Information'),
+        backgroundColor: Color.fromARGB(255, 255, 217, 187),
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -375,7 +378,7 @@ class FaqSection extends StatelessWidget {
               ],
             ),
           );
-        }).toList(),
+        }),
       ],
     );
   }

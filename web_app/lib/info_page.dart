@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'app_localizations.dart';
 
-class InfoPage extends StatelessWidget {
 
-  // get child => null;
-  
+class InfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Determine text color based on theme

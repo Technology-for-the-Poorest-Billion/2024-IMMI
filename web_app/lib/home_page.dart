@@ -3,7 +3,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 import 'package:web_app/prediction.dart';
 import 'utils.dart';
-import 'app_localizations.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -109,7 +109,7 @@ class _HomePageState extends State<HomePage> {
         precedingCounter ++;
       }
     }
-    
+
     // Update data 
     CycleDataUtils.updateCycleData(cycleStartDate, pastCycleStartDates, pastEntryDates);
 
@@ -124,9 +124,6 @@ class _HomePageState extends State<HomePage> {
 
     // Save the new data to Hive
     await CycleDataUtils.writeCycleData(entryKey, newEntry);
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Date recorded successfully!'))
-    );
   }
 
   @override
@@ -149,8 +146,24 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.translate('home_title') ?? 'home_title'),
+        title: Text('Home'),
         backgroundColor: Color.fromARGB(255, 255, 217, 187),
+        actions: [
+          IconButton(
+            onPressed: () {
+              setState(() {});
+              refreshData();
+            },
+            icon: const Icon(Icons.refresh)
+          ),
+          IconButton(
+            onPressed: () {
+              setState(() {});
+              jumpToToday();
+            },
+            icon: const Icon(Icons.today)
+          )
+        ],
       ),
       body: Column(
         children: [
@@ -179,7 +192,7 @@ class _HomePageState extends State<HomePage> {
                       style: ButtonStyle(
                         foregroundColor: WidgetStateProperty.all<Color>(textColor)
                       ),
-                      child: Text(AppLocalizations.of(context)!.translate('reset') ?? 'Reset'),
+                      child: const Text('Reset'),
                     ),
                   ],
                 ),
@@ -238,7 +251,7 @@ class _HomePageState extends State<HomePage> {
                       style: ButtonStyle(
                         foregroundColor: WidgetStateProperty.all<Color>(textColor)
                       ),
-                      child: Text(AppLocalizations.of(context)!.translate('record') ?? 'Record'),
+                      child: const Text('Record'),
                     ),
                   ],
                 ),
@@ -291,7 +304,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                child: Text('Previous Entry is: $lastEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                child: Text('Previous Entry on: $lastEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
                 onPressed: () {
                   correctedEntryDate = lastEntry;
                   Navigator.of(context).pop(correctedEntryDate);
@@ -310,7 +323,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-                child: Text('Current Entry is: $thisEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
+                child: Text('Current Entry on: $thisEntry', style: TextStyle(fontSize: 16.0, color: Colors.black)),
                 onPressed: () {
                   correctedEntryDate = thisEntry;
                   Navigator.of(context).pop(correctedEntryDate);
@@ -415,25 +428,40 @@ class _HomePageState extends State<HomePage> {
     var todayColor = isDarkMode ? Color(0xFF82B1FF) : Colors.blue[200];
     var selectedColor = isDarkMode ? Color(0xFF424242) : Colors.blue;
     var cycleColor = isDarkMode ? Color(0xFF69F0AE) : Colors.green;
-    var fertileColor = isDarkMode ? Color(0xFFFF5252) : Colors.red;
+    var previousFertileColor = isDarkMode ? Color(0xFFFFAB91) : Colors.orange[200]; // Color for previous cycles' fertile window
     var predictionColor = isDarkMode ? Color(0xFFB39DDB) : Colors.deepPurple[200]; // Prediction color
+    var fertileColor = isDarkMode ? Color(0xFFFF5252) : Colors.red;
 
     return FutureBuilder<CycleData>(
       future: _cycleDataFuture,
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
-        } else if (snapshot.hasError || !snapshot.hasData) {
-          return Text("Error loading cycle data!");
-        } else {
-          CycleData cycleData = snapshot.data!;
-          DateTime lastCycleStartDate = DateFormat('yyyy-MM-dd').parse(cycleData.startDates.last);
-          int lastCycleLength = cycleData.cycleLengths.last;
-          DateTime predictionStartDate = lastCycleStartDate.add(Duration(days: lastCycleLength));
-          DateTime predictedFertileStart = predictionStartDate.add(Duration(days: 7));
-          DateTime predictedFertileEnd = predictionStartDate.add(Duration(days: 18));
+        bool hasData = snapshot.hasData && snapshot.data!.startDates.isNotEmpty && snapshot.data!.cycleLengths.isNotEmpty;
 
-          return Container(
+        // Define calendar logic for dates
+        DateTime? lastCycleStartDate;
+        DateTime? predictionStartDate;
+        DateTime? predictedFertileStart;
+        DateTime? predictedFertileEnd;
+        List<DateTime> fertileStarts = [];
+        List<DateTime> fertileEnds = [];
+
+        if (hasData) {
+            lastCycleStartDate = DateFormat('yyyy-MM-dd').parse(snapshot.data!.startDates.last);
+            int lastCycleLength = snapshot.data!.cycleLengths.last;
+            predictionStartDate = lastCycleStartDate.add(Duration(days: lastCycleLength));
+            predictedFertileStart = predictionStartDate.add(Duration(days: 7));
+            predictedFertileEnd = predictionStartDate.add(Duration(days: 18));
+            for (var i = 0; i < snapshot.data!.startDates.length; i++) {
+                DateTime start = DateFormat('yyyy-MM-dd').parse(snapshot.data!.startDates[i]);
+                DateTime fertileStart = start.add(Duration(days: 7));
+                DateTime fertileEnd = start.add(Duration(days: 18));
+
+                fertileStarts.add(fertileStart);
+                fertileEnds.add(fertileEnd);
+            }
+        }
+
+        return Container(
             color: backgroundColor,
             margin: const EdgeInsets.symmetric(horizontal: 8.0),
             padding: const EdgeInsets.symmetric(vertical: 10.0),
@@ -473,18 +501,20 @@ class _HomePageState extends State<HomePage> {
                             shape: BoxShape.circle,
                           ),
                           alignment: Alignment.center,
+                          padding: EdgeInsets.all(7),
                           child: Text(
                             day.day.toString(),
                             style: TextStyle(color: Colors.white),
                           ),
                         );
-                      } else if (_isSameDay(predictionStartDate, day)) {
+                      } else if (predictionStartDate != null && _isSameDay(predictionStartDate, day)) {
                         return Container(
                           decoration: BoxDecoration(
                             color: predictionColor,
                             shape: BoxShape.circle,
                           ),
                           alignment: Alignment.center,
+                          padding: EdgeInsets.all(3),
                           child: Text(
                             day.day.toString(),
                             style: TextStyle(color: Colors.white),
@@ -500,6 +530,7 @@ class _HomePageState extends State<HomePage> {
                           shape: BoxShape.circle,
                         ),
                         alignment: Alignment.center,
+                        padding: EdgeInsets.all(7),
                         child: Text(
                           day.day.toString(),
                           style: TextStyle(color: Colors.white),
@@ -507,37 +538,60 @@ class _HomePageState extends State<HomePage> {
                       );
                     },
                     markerBuilder: (context, day, events) {
-                      // Handle cycle start and fertile window markers
-                      if (cycleData.startDates.contains(DateFormat('yyyy-MM-dd').format(day))) {
-                        return Positioned(
-                          bottom: 1,
-                          child: Container(
-                            padding: EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: cycleColor,
-                              shape: BoxShape.circle,
-                            ),
+                      List<Widget> markers = [];
+
+                      // Check for cycle start dates and mark them
+                      if (hasData && snapshot.data!.startDates.contains(DateFormat('yyyy-MM-dd').format(day))) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: cycleColor,
+                            shape: BoxShape.circle,
+                          ),
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.all(5),
+                          child: Text(
+                          day.day.toString(),
+                          style: TextStyle(color: Colors.white),
                           ),
                         );
                       }
-                      for (var startDate in cycleData.startDates) {
-                        DateTime start = DateFormat('yyyy-MM-dd').parse(startDate);
-                        DateTime fertileStart = start.add(Duration(days: 7)); // Day 8
-                        DateTime fertileEnd = start.add(Duration(days: 18)); // Day 18
-                        if ((day.isAfter(fertileStart) && day.isBefore(fertileEnd)) || (day.isAfter(predictedFertileStart) && day.isBefore(predictedFertileEnd))) {
-                          return Positioned(
-                            bottom: 1,
-                            child: Container(
-                              padding: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                color: fertileColor,
-                                shape: BoxShape.circle,
-                              ),
+
+                      // Mark previous cycles' fertile windows
+                      for (int i = 0; i < fertileStarts.length; i++) {
+                        if (day.isAfter(fertileStarts[i]) && day.isBefore(fertileEnds[i])) {
+                            return Container(
+                            decoration: BoxDecoration(
+                              color: previousFertileColor,
+                              shape: BoxShape.circle,
+                            ),
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.all(5),
+                            child: Text(
+                            day.day.toString(),
+                            style: TextStyle(color: Colors.white),
                             ),
                           );
                         }
                       }
-                      return null;
+
+                      // Mark predicted fertile period for the last cycle
+                      if (predictedFertileStart != null && predictedFertileEnd != null &&
+                        day.isAfter(predictedFertileStart) && day.isBefore(predictedFertileEnd)) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: fertileColor,
+                            shape: BoxShape.circle,
+                          ),
+                          alignment: Alignment.center,
+                          padding: EdgeInsets.all(3),
+                          child: Text(
+                          day.day.toString(),
+                          style: TextStyle(color: Colors.white),
+                          ),
+                        );
+                      }
+
+                      return markers.isEmpty ? null : Stack(children: markers);
                     },
                   ),
                   daysOfWeekHeight: 25.0,
@@ -547,7 +601,6 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           );
-        }
       },
     );
   }
@@ -562,4 +615,18 @@ class _HomePageState extends State<HomePage> {
     int numberOfDays = lastDayOfMonth.day - firstDayOfMonth.day + 1;
     return (numberOfDays / 7).ceil();
   }
+
+    void jumpToToday() {
+        setState(() {
+            _focusedDay = DateTime.now();
+            _selectedDay = DateTime.now();
+        });
+    }
+
+  void refreshData() {
+    setState(() {
+      _cycleDataFuture = CycleDataUtils.loadData();
+    });
+  }
+
 }

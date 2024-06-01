@@ -3,7 +3,8 @@ This will go through each of the pages on the website and what each page does.
 
 ### Home Page
 (insert image of home page)
-![Home_Page](https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/b284355e-8574-4f70-9438-f196d23c6857)
+![Home_Page2](https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/3e0ba1be-9ef2-4f59-a9d8-f15b8cc697d1)
+
 
 On the Home page, 3 months will be visible, the current month, previous month and the next month. You can select which day of the cycle you think you're on
 at the moment or probably what's easiest is selecting the date you know you started your first period on, change the Day of Cycle to display 1, and
@@ -21,4 +22,7 @@ display your most fertile window using blue dots on those dates.
 
 The Info page is used the educate users about each stage of the menstrual cycle and how each stage effects you biologically, emotionally and physically and how 
 certain foods and exercise would help with your symptoms in each stage. Theres a Symptoms and Tips section so you can learn whats normal when you're on 
-your period. There's an About IMMI section where you can learn about the company. There's also a Frequently Asked Questions section for you to undertand more about your period and to get some answers 
+your period. There's an About IMMI section where you can learn about the company. There's also a Frequently Asked Questions section for you to undertand more about your period and to get some answers.
+
+### Diary Page
+(Insert image of Diary page)

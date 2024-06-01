@@ -1,4 +1,6 @@
 ## App Layout
+This will go through each of the pages on the website and what each page does.
+
 ### Home Page
 (insert image of home page)
 
@@ -10,4 +12,7 @@ input information. The calender will display the predicted period dates with red
 display your most fertile window using blue dots on those dates.
 
 ### Information Page
+(Insert image of Info page)
 
+The Info page is used the educate users about each stage of the menstrual cycle and how each stage effects you biologically, emotionally and physically and how 
+certain foods and exercise would help with your symptoms in each stage. Theres also a 

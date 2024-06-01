@@ -10,6 +10,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // @override
+  // bool get wantKeepAlive => true;
+
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime _today = DateTime.now();
@@ -19,6 +22,8 @@ class _HomePageState extends State<HomePage> {
   late TextEditingController repetitionController;
   String correctedEntryDate = '';
   String correctedStartDate = '';
+  late TextEditingController dayController; // Controller for the day input
+  Future<CycleData>? _cycleDataFuture;
 
   @override
   void initState() {
@@ -26,13 +31,28 @@ class _HomePageState extends State<HomePage> {
     _selectedDay = DateTime.now();  // Initialize _selectedDay
     repetitionController = TextEditingController();
     precedingController = TextEditingController();
+    dayController = TextEditingController(text: _currentDay.toString());
+    _cycleDataFuture = CycleDataUtils.loadData();  // Load data once and use throughout
   }
 
   @override
   void dispose() {
     repetitionController.dispose();
     precedingController.dispose();
+    dayController.dispose();
     super.dispose();
+  }
+
+  void _updateDay(String newDay) {
+    int? dayNum = int.tryParse(newDay);
+    if (dayNum != null && dayNum > 0) { // Validate to ensure day is positive
+      setState(() {
+        _currentDay = dayNum;
+      });
+    } else {
+      // Reset to the last valid day if invalid input
+      dayController.text = _currentDay.toString();
+    }
   }
 
   void recordEntry(DateTime cycleStartDate, DateTime entryDate) async {
@@ -73,7 +93,6 @@ class _HomePageState extends State<HomePage> {
       int precedingCounter = 0;
       bool invalidDate = false;
       while(cycleStartDate.difference(CycleDataUtils.stringToDate(pastCycleStartDates.last)).inDays <= 0 || invalidDate == true) {
-        print('here');
         if (precedingCounter >= 3) {
           return;
         }
@@ -151,6 +170,7 @@ class _HomePageState extends State<HomePage> {
                       onPressed: () {
                         setState(() {
                           _currentDay = 1;
+                          dayController.text = _currentDay.toString();
                         });
                       },
                       style: ButtonStyle(
@@ -160,25 +180,50 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-                Column(
-                  children: [
-                    Text('Current Day of Cycle', style: TextStyle(fontSize: 18.0, color: textColor)),
-                    Row(
-                      children: [
-                        IconButton(icon: Icon(Icons.remove, color: textColor), onPressed: () {
-                          setState(() {
-                            if (_currentDay > 1) _currentDay--;
-                          });
-                        }),
-                        Text('Day $_currentDay', style: TextStyle(fontSize: 18.0, color: textColor)),
-                        IconButton(icon: Icon(Icons.add, color: textColor), onPressed: () {
-                          setState(() {
-                            _currentDay++;
-                          });
-                        }),
-                      ],
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    children: [
+                      Text('Current Day of Cycle', style: TextStyle(fontSize: 18.0, color: textColor)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.remove),
+                            onPressed: () {
+                              if (_currentDay > 1) {
+                                setState(() {
+                                  _currentDay--;
+                                  dayController.text = _currentDay.toString();
+                                });
+                              }
+                            },
+                          ),
+                          SizedBox(
+                            width: 50, // Width of the text field
+                            child: TextField(
+                              controller: dayController,
+                              keyboardType: TextInputType.number,
+                              textAlign: TextAlign.center,
+                              onSubmitted: _updateDay,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                              ),
+                            ),
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.add),
+                            onPressed: () {
+                              setState(() {
+                                _currentDay++;
+                                dayController.text = _currentDay.toString();
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
                 Column(
                   children: [
@@ -318,20 +363,12 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
 
-
             // change to select date
-
             TextField(
               autofocus: true,
               decoration: InputDecoration(hintText: 'Enter new start date of cycle: YYYY-MM-DD'),
               controller: precedingController
             ),
-
-
-
-
-
-
           ],
         ),
       ),  
@@ -370,45 +407,145 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildCalendar(DateTime date, Color backgroundColor, Color textColor, bool fullHeight) {
     var isDarkMode = Theme.of(context).brightness == Brightness.dark;
-    var todayColor = isDarkMode ? Colors.blue[900] : Colors.blue[200];
-    var selectedColor = isDarkMode ? Colors.pink[900] : Colors.pink[200];
+    
+    // Define colors
+    var todayColor = isDarkMode ? Color(0xFF82B1FF) : Colors.blue[200];
+    var selectedColor = isDarkMode ? Color(0xFF424242) : Colors.blue;
+    var cycleColor = isDarkMode ? Color(0xFF69F0AE) : Colors.green;
+    var fertileColor = isDarkMode ? Color(0xFFFF5252) : Colors.red;
+    var predictionColor = isDarkMode ? Color(0xFFB39DDB) : Colors.deepPurple[200]; // Prediction color
 
-    return Container(
-      color: backgroundColor,
-      margin: const EdgeInsets.symmetric(horizontal: 8.0),
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: Column(
-        children: [
-          TableCalendar(
-            firstDay: DateTime.utc(date.year, date.month, 1),
-            lastDay: DateTime.utc(date.year, date.month + 1, 0),
-            focusedDay: date,
-            calendarFormat: _calendarFormat,
-            daysOfWeekStyle: DaysOfWeekStyle(
-              weekdayStyle: TextStyle(color: textColor),  // Use textColor for weekdays
-              weekendStyle: TextStyle(color: textColor),  // Use textColor for weekends
-              dowTextFormatter: (date, locale) => DateFormat.E(locale).format(date).substring(0, 1),
+    return FutureBuilder<CycleData>(
+      future: _cycleDataFuture,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator();
+        } else if (snapshot.hasError || !snapshot.hasData) {
+          return Text("Error loading cycle data!");
+        } else {
+          CycleData cycleData = snapshot.data!;
+          DateTime lastCycleStartDate = DateFormat('yyyy-MM-dd').parse(cycleData.startDates.last);
+          int lastCycleLength = cycleData.cycleLengths.last;
+          DateTime predictionStartDate = lastCycleStartDate.add(Duration(days: lastCycleLength));
+          DateTime predictedFertileStart = predictionStartDate.add(Duration(days: 7));
+          DateTime predictedFertileEnd = predictionStartDate.add(Duration(days: 18));
+
+          return Container(
+            color: backgroundColor,
+            margin: const EdgeInsets.symmetric(horizontal: 8.0),
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: Column(
+              children: [
+                TableCalendar(
+                  firstDay: DateTime.utc(date.year, date.month, 1),
+                  lastDay: DateTime.utc(date.year, date.month + 1, 0),
+                  focusedDay: date,
+                  calendarFormat: _calendarFormat,
+                  daysOfWeekStyle: DaysOfWeekStyle(
+                    weekdayStyle: TextStyle(color: textColor),
+                    weekendStyle: TextStyle(color: textColor),
+                  ),
+                  headerVisible: false,
+                  selectedDayPredicate: (day) => _isSameDay(_selectedDay!, day),
+                  onDaySelected: (selectedDay, focusedDay) {
+                    setState(() {
+                      _selectedDay = selectedDay;
+                      _focusedDay = focusedDay;
+                    });
+                  },
+                  calendarStyle: CalendarStyle(
+                    todayDecoration: BoxDecoration(color: todayColor, shape: BoxShape.circle),
+                    selectedDecoration: BoxDecoration(color: selectedColor, shape: BoxShape.circle),
+                    defaultDecoration: BoxDecoration(shape: BoxShape.circle),
+                    outsideDecoration: BoxDecoration(shape: BoxShape.circle),
+                    defaultTextStyle: TextStyle(fontSize: 16, color: textColor),
+                    weekendTextStyle: TextStyle(fontSize: 16, color: textColor),
+                  ),
+                  calendarBuilders: CalendarBuilders(
+                    defaultBuilder: (context, day, focusedDay) {
+                      if (_isSameDay(_selectedDay!, day)) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: selectedColor,
+                            shape: BoxShape.circle,
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(
+                            day.day.toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        );
+                      } else if (_isSameDay(predictionStartDate, day)) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: predictionColor,
+                            shape: BoxShape.circle,
+                          ),
+                          alignment: Alignment.center,
+                          child: Text(
+                            day.day.toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        );
+                      }
+                      return null;  // Use default style
+                    },
+                    todayBuilder: (context, day, focusedDay) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: todayColor,
+                          shape: BoxShape.circle,
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          day.day.toString(),
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      );
+                    },
+                    markerBuilder: (context, day, events) {
+                      // Handle cycle start and fertile window markers
+                      if (cycleData.startDates.contains(DateFormat('yyyy-MM-dd').format(day))) {
+                        return Positioned(
+                          bottom: 1,
+                          child: Container(
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                              color: cycleColor,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        );
+                      }
+                      for (var startDate in cycleData.startDates) {
+                        DateTime start = DateFormat('yyyy-MM-dd').parse(startDate);
+                        DateTime fertileStart = start.add(Duration(days: 7)); // Day 8
+                        DateTime fertileEnd = start.add(Duration(days: 18)); // Day 18
+                        if ((day.isAfter(fertileStart) && day.isBefore(fertileEnd)) || (day.isAfter(predictedFertileStart) && day.isBefore(predictedFertileEnd))) {
+                          return Positioned(
+                            bottom: 1,
+                            child: Container(
+                              padding: EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                color: fertileColor,
+                                shape: BoxShape.circle,
+                              ),
+                            ),
+                          );
+                        }
+                      }
+                      return null;
+                    },
+                  ),
+                  daysOfWeekHeight: 25.0,
+                  rowHeight: 40.0,
+                ),
+                if (fullHeight) ...List.generate(6 - _getWeekCount(date), (index) => SizedBox(height: 40.0)),
+              ],
             ),
-            headerVisible: false,
-            selectedDayPredicate: (day) => _isSameDay(_selectedDay!, day),
-            onDaySelected: (selectedDay, focusedDay) {
-              setState(() {
-                _selectedDay = selectedDay;
-                _focusedDay = focusedDay;
-              });
-            },
-            calendarStyle: CalendarStyle(
-              todayDecoration: BoxDecoration(color: todayColor, shape: BoxShape.circle),
-              selectedDecoration: BoxDecoration(color: selectedColor, shape: BoxShape.circle),
-              defaultTextStyle: TextStyle(fontSize: 16, color: textColor),
-              weekendTextStyle: TextStyle(fontSize: 16, color: textColor),
-            ),
-            daysOfWeekHeight: 25.0,
-            rowHeight: 40.0,
-          ),
-          if (fullHeight) ...List.generate(6 - _getWeekCount(date), (index) => SizedBox(height: 40.0)),
-        ],
-      ),
+          );
+        }
+      },
     );
   }
 

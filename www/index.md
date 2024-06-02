@@ -11,6 +11,29 @@ There's a lack of education about the menstrual cycle around the world with stat
 first get their period. Current tools that provide assistance to help educate and track cycles exhibit negligence towards data privicy despite 79% of women
 expressing concern. The IMMI Period Tracker has been developed with this in mind as well as a heavier emphasis on educating about the menstual cycle.
 
+## Benefits of the IMMI Period Tracker
+### Health Education and Awareness Benefits:
+Users gain a better insight into understanding their menstrual cycles.
+Tracking your information helps recognise symptoms and how they change with the different phases of your cycle.
+Offers educational resources that may not be accessible to all.
+Can be used as a teaching tool in schools to educate about menstrual health.
+
+### Data Security and Data Driven Health Information Benefits:
+Users have control over their data where the their information is only accessed by them.
+Data is accumulated over a long time increasing the accuracy of pattern recognition 
+Long term data collection is valuable when tracking overall reproductive health trends.
+
+### Customisation Benefits:
+Users can adjust the settings to their preference.
+Trailered recommendations can be given from the user data if the user wants.
+There can be a customisation of tracking features to suit individual needs.
+
+### Personal Benefits:
+The website can provide a sense of community which can minimise the feeling of isolation with menstrual health.
+Understanding your cycle can reduce stress when managing life around your period.
+Tracking your period can help reduce anxiety about unexpected periods.
+Having a safe space to track your information can also reduce stress and anxiety when thinking about your menstrual cycle.
+
 
 ## How to use the IMMI Period Tracker
 We have a step-by-step demonstration of the main functions of the website.

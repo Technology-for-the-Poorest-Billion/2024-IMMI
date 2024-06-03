@@ -1,6 +1,6 @@
----
-title: Alignment with Sustainable Development Goals
----
+<h1 align="center">
+  Alignment with Sustainable Development Goals
+</h1>
 
 
 <h3 align="center">

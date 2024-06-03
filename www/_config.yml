@@ -33,7 +33,7 @@ plugins:
 header_pages:
   - about.md
   - appLayout.md
-  - index.md
+  # - index.md
   - ReflectiveDiscussion.md
 
 # Set to `true` to show excerpts on the homepage.

@@ -31,10 +31,10 @@ plugins:
 # If you want to link only specific pages in your header, use this and add the path to the pages
 # in order as they should show up.
 header_pages:
-  - about.md
-  - appLayout.md
+  - 2024-IMMI/www/about.md
+  - 2024-IMMI/www/appLayout.md
   # - index.md
-  - ReflectiveDiscussion.md
+  - 2024-IMMI/www/ReflectiveDiscussion.md
 
 # Set to `true` to show excerpts on the homepage.
 #show_excerpts: false

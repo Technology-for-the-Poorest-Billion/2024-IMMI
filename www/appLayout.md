@@ -2,8 +2,6 @@
 This will go through each of the pages on the website and what each page does.
 
 ### Home Page
-(insert image of home page)
-
 <p align="center">
   <img width="700" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/df0dc2ae-28b3-404f-b6e9-13098267d19e">
 </p>
@@ -16,16 +14,19 @@ input information. The calender will display the predicted period dates with red
 display your most fertile window using blue dots on those dates.
 
 ### Information Page
-(Insert image of Info page)
-
 <p align="center">
-  <img width="350" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/aae7794b-e4e4-47a2-afe1-fbee2dd7bd9b">
-  <img width="350" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/41d70ee7-181a-4ed1-a327-1614171f8e9d">
+  <img width="700" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/aae7794b-e4e4-47a2-afe1-fbee2dd7bd9b">
 </p>
 
 The Info page is used the educate users about each stage of the menstrual cycle and how each stage effects you biologically, emotionally and physically and how 
-certain foods and exercise would help with your symptoms in each stage. Theres a Symptoms and Tips section so you can learn whats normal when you're on 
-your period. There's an About IMMI section where you can learn about the company. There's also a Frequently Asked Questions section for you to undertand more about your period and to get some answers.
+certain foods and exercise would help with your symptoms in each stage. 
+
+<p align="center">
+<img width="350" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/41d70ee7-181a-4ed1-a327-1614171f8e9d">
+</p>
+
+Theres a Symptoms and Tips section so you can learn whats normal when you're on your period. There's an About IMMI section where you can learn about the company. 
+There's also a Frequently Asked Questions section for you to undertand more about your period and to get some answers.
 
 ### Diary Page
 (Insert image of Diary page)
@@ -41,12 +42,22 @@ current date.
   <img width="700" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/8c2d1c70-011c-4448-94af-da7f5f4deb2f">
 </p>
 
-
 Once you've entered your thoughts and feelings for the day, just click the tick icon in the top right corner and go back to the diary page and click the refresh button in the top right corner. The Diary page
 should update with your entry which you can edit whenever. The data is stored privately on the web browser which only you have access to. This data will be available to see on the data page.
 
 ### Data Page
-(Insert image of Data Page)
+<p align="center">
+  <img width="700" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/b3753fe2-ee42-4ed5-9a35-49f8e536ce9b">
+</p>
+The Data page displays the information you've input about when your last periods were. This means you're able to track how your cycle length changes each
+month. There's also a Clear All button in the top right corner for if you need to erase data immediately, you can.
+
+<p align="center">
+  <img width="700" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/29dee5d4-0b4e-45af-87e3-51d04ccb7651">
+</p>
+
+Once you click the button, a confirmation request will appear to make sure the button wasn't pressed accidentilly and then all your data will be erased if you
+confirm.
 
 
 ### Settings Page

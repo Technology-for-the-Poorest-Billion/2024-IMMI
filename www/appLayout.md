@@ -51,7 +51,7 @@ current date.
 </p>
 
 Once you've entered your thoughts and feelings for the day, just click the tick icon in the top right corner and go back to the diary page and click the refresh button in the top right corner. The Diary page
-should update with your entry which you can edit whenever. The data is stored privately on the web browser which only you have access to. This data will be available to see on the data page.
+should update with your entry which you can edit whenever. The data is stored privately on the web browser which only you have access to.
 
 ### Data Page
 <p align="center">
@@ -59,7 +59,8 @@ should update with your entry which you can edit whenever. The data is stored pr
 </p>
 
 The Data page displays the information you've input about when your last periods were. This means you're able to track how your cycle length changes each
-month. There's also a Clear All button in the top right corner for if you need to erase data immediately, you can.
+month. This data can only be accessed by you and is stored privately on the web browser.
+There's also a Clear All button in the top right corner for if you need to erase data immediately, you can.
 
 <p align="center">
   <img width="700" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/29dee5d4-0b4e-45af-87e3-51d04ccb7651">

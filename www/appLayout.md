@@ -1,4 +1,4 @@
-## App Layout
+
 This will go through each of the pages on the website and what each page does.
 
 ### Home Page

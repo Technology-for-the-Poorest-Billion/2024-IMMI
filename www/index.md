@@ -43,6 +43,8 @@ This can be found at this [link](appLayout.md) to the website layout page.
 ## How the Tracker was developed
 The website was developed by 
 
+## Reflective discussion about the work’s alignment with the Sustainable Development
+This can be found at this [link](linkedpage.md) to the website layout page.
 
 
 

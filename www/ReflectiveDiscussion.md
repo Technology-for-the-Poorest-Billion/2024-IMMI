@@ -3,8 +3,7 @@ title: Alignment with Sustainable Development Goals
 ---
 
 
-Just to show you how to structure a simple website using multiple pages.
-
-Keep thinkgs simple. Equations probably won't work here, but tables and images should be fine.
-
+<h3 align="center">
+  UNICEF Principles for Digital Development
+</h3>
 

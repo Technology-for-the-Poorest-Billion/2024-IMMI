@@ -19,8 +19,8 @@ display your most fertile window using blue dots on those dates.
 (Insert image of Info page)
 
 <p align="center">
-  <img width="400" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/aae7794b-e4e4-47a2-afe1-fbee2dd7bd9b">
-  <img width="400" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/41d70ee7-181a-4ed1-a327-1614171f8e9d">
+  <img width="350" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/aae7794b-e4e4-47a2-afe1-fbee2dd7bd9b">
+  <img width="350" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/41d70ee7-181a-4ed1-a327-1614171f8e9d">
 </p>
 
 The Info page is used the educate users about each stage of the menstrual cycle and how each stage effects you biologically, emotionally and physically and how 
@@ -50,6 +50,7 @@ should update with your entry which you can edit whenever. The data is stored pr
 
 
 ### Settings Page
-Currently, the setings page has a light and dark mode feature so you're able to customise the web app to how you want. There's also a language function so you can change the language of the website so its
-accessible to any user.
+Currently, the setings page has a light and dark mode feature so you're able to customise the web app to how you want. 
+There's also a language function so you can change the language of the website so its accessible to any user.
+
 

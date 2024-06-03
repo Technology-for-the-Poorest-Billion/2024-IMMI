@@ -28,11 +28,11 @@ plugins:
 
 # Theme-specific settings
 
-# If you want to link only specific pages in your header, use this and add the path to the pages
+# If you want to link only specific pages in your header, use this and add the path to the page
 # in order as they should show up.
 header_pages:
-  # - about.md
-  # - appLayout.md
+  - about.md
+  - appLayout.md
   # - index.md
   - ReflectiveDiscussion.md
 

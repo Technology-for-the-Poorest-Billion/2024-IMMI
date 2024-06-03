@@ -2,17 +2,26 @@
 This will go through each of the pages on the website and what each page does.
 
 ### Home Page
+On the Home page, 3 months will be visible, the current month, previous month and the next month.
+You can select which day of the cycle you think you're onat the moment or probably what's easiest is selecting the date you know you started your first period on,
+change the Day of Cycle to display 1, and click record.
+However, if you miss the start day of your period, you can change the Day of Cycle to whichever day it is and click record to update.
+
 <p align="center">
   <img width="700" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/b9c72f3e-e9f8-4472-93af-463df952fc5f">
 </p>
 
-On the Home page, 3 months will be visible, the current month, previous month and the next month. You can select which day of the cycle you think you're on
-at the moment or probably what's easiest is selecting the date you know you started your first period on, change the Day of Cycle to display 1, and
-click record. However, if you miss the start day of your period, you can change the Day of Cycle to whichever day it is and click record to update.
 The default cycle length will be 28 days but if this isnt correct for you, the app will calculate your actual cycle length using an average of the last 3 months 
-input information. The calender will display the predicted fertile window with red dots and the date of the start of your next period in purple
+input information.
+Once you refresh, the calender will display the predicted fertile window with red dots and the date of the start of your next period in purple
 so you know what date your next period will start. 
 The calender will also display your past fertility window in yellow and past period dates in green.
+
+<p align="center">
+  <img width="700" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/77b06332-78f6-4083-bea2-281ff8b59eff">
+</p>
+
+If you input two period dates two close together within the same cycle, a preceding error will occur and ask for the correct date input.
 
 ### Information Page
 <p align="center">
@@ -30,8 +39,6 @@ Theres a Symptoms and Tips section so you can learn whats normal when you're on 
 There's also a Frequently Asked Questions section for you to undertand more about your period and to get some answers.
 
 ### Diary Page
-(Insert image of Diary page)
-
 <p align="center">
   <img width="700" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/86e1c3b9-f9dd-445f-a7e1-54b8b04d4391">
 </p>
@@ -50,6 +57,7 @@ should update with your entry which you can edit whenever. The data is stored pr
 <p align="center">
   <img width="700" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/b3753fe2-ee42-4ed5-9a35-49f8e536ce9b">
 </p>
+
 The Data page displays the information you've input about when your last periods were. This means you're able to track how your cycle length changes each
 month. There's also a Clear All button in the top right corner for if you need to erase data immediately, you can.
 
@@ -64,6 +72,7 @@ confirm.
 <p align="center">
   <img width="700" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/99096826/1192179a-a7eb-4f73-b684-b804c12aca57">
 </p>
+
 Currently, the settings page has a light and dark mode feature so you're able to customise the web app to how you want. 
 
 <p align="center">

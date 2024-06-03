@@ -31,7 +31,7 @@ plugins:
 # If you want to link only specific pages in your header, use this and add the path to the pages
 # in order as they should show up.
 header_pages:
-  - about.md
+  - https://technology-for-the-poorest-billion.github.io/2024-IMMI/about
   - www/appLayout.md
   # - index.md
   - www/ReflectiveDiscussion.md

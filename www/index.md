@@ -1,4 +1,6 @@
-
+---
+title: IMMI Cycle Tracker Information
+---
 
 ## Introduction
 IMMI helps to manage and educate about your menstrual cycle by creating an informative website in which you can track your period.

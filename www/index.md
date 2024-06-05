@@ -35,14 +35,11 @@ expressing concern. The IMMI Cycle Tracker has been developed with this in mind 
 - Having a safe space to track your information can also reduce stress and anxiety when thinking about your menstrual cycle.
 
 
-## How to use the IMMI Cycle Tracker
-We have a step-by-step demonstration of the main functions of the website.
-This can be found at this [link](appLayout.md) to the website layout page.
-
-
-## How the Tracker was developed
-The project management information can be found at this [link](ProjectManagement.md).
-
-## Reflective discussion about the work’s alignment with the Sustainable Development
-This can be found at this [link](ReflectiveDiscussion.md) to the website layout page.
-
+## Learn More
+How to use the IMMI Cycle Tracker: we have a step-by-step demonstration of the main functions of the website.
+This can be found at this [link](appLayout.md) to the website layout page. <br />
+<br />
+How the Tracker was developed: the project management information can be found at this [link](ProjectManagement.md). <br />
+<br />
+Reflective discussion about the work’s alignment with the Sustainable Development Goals: this can be found at this [link](ReflectiveDiscussion.md) to the website layout page. <br />
+<br />

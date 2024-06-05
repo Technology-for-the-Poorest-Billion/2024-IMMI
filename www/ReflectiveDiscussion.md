@@ -18,6 +18,11 @@ In addition to physical health, mental well-being is another key component towar
 Gender equality is promoted through raising awareness as well. Note that menstrual cycle-related biases are not limited to developing countries, our app not only empowers female users with reliable tracking but also grants their partners an opportunity to learn and care for their spouse on a single platform. From a broader point of view, gender-related biases include confirmation bias (selective perception 👁 of information to confirm one's theory), availability heuristics (belief based on the availability of information in one's mind), and more. These biases could be the result of culture, personality, and upbringing. Although some aspects, such as personality, are relatively hard to change, raising awareness on our cycle tracker removes barriers to information 🚧, exposing one to new perspectives, thus enabling the user to think more critically with more comprehensive knowledge, removing biases, and achieving gender equality.
 
 
-### UNICEF Principles for Digital Development
+### UNICEF Principles for Digital Development - a compass for those working to promote sustainable and inclusive development in today’s complex digital landscape 🧭
+<br />
 
+<p>
+    <img width="500" alt="PfDD" src="https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/assets/98086762/7c391b19-af30-4960-baf5-3a86e721a888">
+</p>
 
+<br />

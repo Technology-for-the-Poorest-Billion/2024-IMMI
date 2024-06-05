@@ -1,4 +1,6 @@
-## Project Management
+---
+title: Project Management
+---
 
 ### Teamwork Strategy
 1. **Ensure Communication**: Establish clear and consistent communication channels to facilitate information sharing and collaboration.

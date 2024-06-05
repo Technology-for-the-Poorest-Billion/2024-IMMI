@@ -7,6 +7,9 @@ title: Project Management
 2. **Regular Meetings**: Schedule frequent meetings to discuss progress, address issues, and make decisions collectively.
 3. **Effective Time Management and Planning**: Assign specific tasks to team members according to their strengths and ensure tasks are completed at different stages to maintain workflow.
 4. **Seek Help When Necessary**: Encourage team members to seek assistance when encountering difficulties, fostering a supportive environment.
+5. **Active Team Work Sessions**: Working in the same room together most days we worked on the project so that we could help each other out.
+6. **Prioritize Primary Tasks**: The original objectives were put into order of importance when focussing on the wider impact. This helped with time management.
+7. **Effective Collaboration**: Understanding how individual strengths can be paired with tasks.
 
 ### Timeline
 
@@ -25,6 +28,8 @@ Most planned milestones were achieved as outlined in the plan. We completed 4 ou
 ### What Worked
 - **Clear Role Assignments**: Each team member was responsible for specific tasks, ensuring a balanced distribution of work.
 - **Successful Integration**: We effectively integrated the contributions of all team members, resulting in a cohesive final product.
+- **Clear Communicaion**: We helped each other out if we were struggling with tasks and were a good team who worked well together. We had out strengths
+and we used them to our advantage while also learning new skills along the way.
 
 ### What Didn't Work
 - **Technical Difficulties**: We underestimated the complexity of syncing with the local calendar, making this task incomplete. However, this can be addressed in future work since we have established the local data storage. 

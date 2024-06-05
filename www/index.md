@@ -1,5 +1,5 @@
 ---
-title: IMMI Period Tracker Information
+title: IMMI Cycle Tracker Information
 ---
 
 ## Introduction
@@ -9,17 +9,17 @@ We will run you through how to use the website, how the website was put together
 ## Why the Website is needed
 There's a lack of education about the menstrual cycle around the world with statistics showing that 40% of girls feel "confused and unprepared" when they 
 first get their period. Current tools that provide assistance to help educate and track cycles exhibit negligence towards data privacy despite 79% of women
-expressing concern. The IMMI Period Tracker has been developed with this in mind as well as a heavier emphasis on educating about the menstrual cycle.
+expressing concern. The IMMI Cycle Tracker has been developed with this in mind as well as a heavier emphasis on educating about the menstrual cycle.
 
-### Benefits of the IMMI Period Tracker
+### Benefits of the IMMI Cycle Tracker
 #### Health Education and Awareness Benefits:
 - Users gain a better insight into understanding their menstrual cycles.
-- Tracking your information helps recognise symptoms and how they change with the different phases of your cycle.
+- Tracking your information helps recognize symptoms and how they change with the different phases of your cycle.
 - Offers educational resources that may not be accessible to all.
 - Can be used as a teaching tool in schools to educate about menstrual health.
 
 #### Data Security and Data-Driven Health Information Benefits:
-- Users have control over their data where the their information is only accessed by them.
+- Users have control over their data where their information is only accessed by them.
 - Data is accumulated over a long time increasing the accuracy of pattern recognition 
 - Long-term data collection is valuable when tracking overall reproductive health trends.
 
@@ -35,7 +35,7 @@ expressing concern. The IMMI Period Tracker has been developed with this in mind
 - Having a safe space to track your information can also reduce stress and anxiety when thinking about your menstrual cycle.
 
 
-## How to use the IMMI Period Tracker
+## How to use the IMMI Cycle Tracker
 We have a step-by-step demonstration of the main functions of the website.
 This can be found at this [link](appLayout.md) to the website layout page.
 

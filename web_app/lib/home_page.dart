@@ -135,14 +135,14 @@ class _HomePageState extends State<HomePage> {
     var isDarkMode = Theme.of(context).brightness == Brightness.dark;
     var textColor = isDarkMode ? Colors.white : Colors.black;
     var calendarBackgroundColor = [
-      Colors.lightBlue.shade50,
+      const Color.fromARGB(255, 124, 138, 144),
       Colors.lightGreen.shade50,
       Colors.pink.shade50
     ].map((color) => isDarkMode ? color.withOpacity(0.3) : color).toList();
 
     // Calculate the start date of the cycle
-    // DateTime startDateOfCycle = DateTime(_today.year, _today.month, _today.day).subtract(Duration(days: _currentDay - 1));
-    DateTime startDateOfCycle = DateTime(_selectedDay!.year, _selectedDay!.month, _selectedDay!.day).subtract(Duration(days: _currentDay - 1)); // For testing
+    DateTime startDateOfCycle = DateTime(_today.year, _today.month, _today.day).subtract(Duration(days: _currentDay - 1));
+    // DateTime startDateOfCycle = DateTime(_selectedDay!.year, _selectedDay!.month, _selectedDay!.day).subtract(Duration(days: _currentDay - 1)); // For testing
 
     // Format the start date to a more readable form, e.g., Jan 28, 2024
     String formattedStartDate = DateFormat('MMM d, y').format(startDateOfCycle);
@@ -249,8 +249,8 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     ElevatedButton(
                       onPressed: () async {
-                        // recordEntry(startDateOfCycle, _today);
-                        recordEntry(startDateOfCycle, _selectedDay!); // For testing
+                        recordEntry(startDateOfCycle, _today);
+                        // recordEntry(startDateOfCycle, _selectedDay!); // For testing
                       },
                       style: ButtonStyle(
                         foregroundColor: WidgetStateProperty.all<Color>(textColor)
@@ -620,12 +620,12 @@ class _HomePageState extends State<HomePage> {
     return (numberOfDays / 7).ceil();
   }
 
-    void jumpToToday() {
-        setState(() {
-            _focusedDay = DateTime.now();
-            _selectedDay = DateTime.now();
-        });
-    }
+  void jumpToToday() {
+    setState(() {
+      _focusedDay = DateTime.now();
+      _selectedDay = DateTime.now();
+    });
+  }
 
   void refreshData() {
     setState(() {

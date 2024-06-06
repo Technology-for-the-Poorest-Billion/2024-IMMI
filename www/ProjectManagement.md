@@ -28,11 +28,11 @@ Most planned milestones were achieved as outlined in the plan. We completed 4 ou
 ### What Worked
 - **Clear Role Assignments**: Each team member was responsible for specific tasks, ensuring a balanced distribution of work.
 - **Successful Integration**: We effectively integrated the contributions of all team members, resulting in a cohesive final product.
-- **Clear Communicaion**: We helped each other out if we were struggling with tasks and were a good team who worked well together. We had out strengths
-and we used them to our advantage while also learning new skills along the way.
+- **Clear Communication**: We helped each other out if we were struggling with tasks and were a good team that worked well together. We had our strengths
+and we used them to our advantage while also learning new skills along the way. We also have our respective weaknesses and all kept an open mind toward suggestions.
 
 ### What Didn't Work
-- **Technical Difficulties**: We underestimated the complexity of syncing with the local calendar, making this task incomplete. However, this can be addressed in future work since we have established the local data storage. 
+- **Technical Difficulties and T**: We underestimated the complexity of our primary objectives. This caused delays and resulted in the inability to implement local calendar syncing. After identifying that we may be behind schedule due to the unexpected amount of bugs and issues that required solving, we communicated and decided to take the divide-and-conquer approach where one teammate moves on to the next independent task (e.g. presentation/website) when the others are debugging. This conserves time and enables us to generate a well-functioning deliverable despite one incomplete objective.
 
 ### Constructive Recommendations
 1. **Maintain Time Management and Update Plans**: Regularly update the project plan to reflect current progress and ensure timely completion of tasks.

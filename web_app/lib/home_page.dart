@@ -135,7 +135,7 @@ class _HomePageState extends State<HomePage> {
     var isDarkMode = Theme.of(context).brightness == Brightness.dark;
     var textColor = isDarkMode ? Colors.white : Colors.black;
     var calendarBackgroundColor = [
-      const Color.fromARGB(255, 124, 138, 144),
+      Colors.blue.shade50,
       Colors.lightGreen.shade50,
       Colors.pink.shade50
     ].map((color) => isDarkMode ? color.withOpacity(0.3) : color).toList();

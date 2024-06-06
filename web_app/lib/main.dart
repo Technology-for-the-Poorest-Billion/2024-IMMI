@@ -14,7 +14,7 @@ import 'app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
-  await Hive.openBox<String>('cycleData');  // Open a new box for cycle data
+  await Hive.openBox<String>('cycleData');
   await Hive.openBox<String>('diaryBox');
   runApp(
     ChangeNotifierProvider(

@@ -7,11 +7,10 @@ class CycleData {
   List<int> cycleLengths;
   List<String> startDates;
   List<String> entryDates;
-
   CycleData(this.cycleLengths, this.startDates, this.entryDates);
 }
 
-// Utility class for managing cycle data using the Hive NoSQL database.
+// Utility class for managing cycle data using the Hive database.
 class CycleDataUtils {
   // Private getter to access the Hive box where cycle data is stored.
   static Box<String> get _box => Hive.box<String>('cycleData');
@@ -123,7 +122,7 @@ class CycleDataUtils {
         String lastEntry = '$daysDifference ${pastCycleStartDates.last}';
         String lastKey = pastEntryDates.last;
 
-        deleteLastEntry();  // Await deletion of the last entry.
+        deleteLastEntry();
         writeCycleData(lastKey, lastEntry);
       } catch (e) {
         print('Error updating cycle data: $e');

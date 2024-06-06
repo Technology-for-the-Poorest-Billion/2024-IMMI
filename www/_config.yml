@@ -1,4 +1,4 @@
-title: IMMI Period Tracker Website
+title: IMMI Cycle Tracker Website
 
 author:
   name: Rosie Clifton, Charles Cai, Barry Gao
@@ -8,9 +8,9 @@ author:
   #Write an awesome description for your new site here. You can edit this line
   #in _config.yml. It will appear in your document head meta (for Google search
   #results) and in your feed.xml site description.
-description: >
-  Take a look at our new website created to help educate and manage your menstrual cycle. This website will show how the IMMI Period Tracker was created and 
-  will explain how to use it.
+# description: >
+#   Take a look at our new website created to help educate and manage your menstrual cycle. This website will show how the IMMI Period Tracker was created and 
+#   will explain how to use it.
 
 # Build settings
 
@@ -30,11 +30,11 @@ plugins:
 
 # If you want to link only specific pages in your header, use this and add the path to the page
 # in order as they should show up.
-header_pages:
-  - about.md
-  - appLayout.md
+# header_pages:
+  # - about.md
+  # - appLayout.md
   # - index.md
-  - ReflectiveDiscussion.md
+  # - ReflectiveDiscussion.md
 
   
 

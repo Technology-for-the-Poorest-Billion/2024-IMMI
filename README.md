@@ -24,6 +24,10 @@
 <br />
 
 ## 🚣 How to Navigate
+
+To look at the structure of this entire project and its importance and aims: [GitHub Pages](https://technology-for-the-poorest-billion.github.io/2024-IMMI/) <br />
+To see the detailed code explanations and guidance for reproducing our results: [GitHub Wiki](https://github.com/Technology-for-the-Poorest-Billion/2024-IMMI/wiki) <br />
+
 ```shell
 /web_app  # flutter files for the web app
   |____ /lib

@@ -1,3 +1,7 @@
+---
+title: About
+---
+
 This project looks to create an accesible, safe and informtive tool for young women to track and learn about their menstrual cycle.
 We have created a website which you can input when your period occurs and can track when your next period will happen.
 The website consists of 5 pages; a home page with the calender with 3 months displaying on it, an information page to educate about the mentrual cycle, 

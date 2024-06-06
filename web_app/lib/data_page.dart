@@ -156,12 +156,4 @@ class TableCycleData {
     required this.cycleStartDate,
     required this.cycleLength
   });
-
-  Map<String, dynamic> toMap() {
-    return {
-      'Entry Date': entryDate,
-      'Cycle Start Date': cycleStartDate,
-      'Cycle Length': cycleLength
-    };
-  }
 }

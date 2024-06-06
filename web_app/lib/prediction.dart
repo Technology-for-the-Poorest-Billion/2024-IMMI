@@ -1,5 +1,6 @@
 class CyclePredictor {
 
+  // Prediction Algorithm Configurations
   static const int maxCycleLength = 99;
   static const int defaultCycleLength = 28;
   static const int averageMin = 21;
@@ -51,29 +52,4 @@ class CyclePredictor {
     }
     return false;
   }
-}
-
-bool checkRepeatedEntry(String newEntryDate, List pastEntryDates) {
-  if(newEntryDate == pastEntryDates[pastEntryDates.length-1]) {
-    return true;
-  }
-  return false;
-}
-
-bool checkPrecededEntry(String cycleStartDate, List pastCycleStartDates) {
-  if(cycleStartDate == pastCycleStartDates[pastCycleStartDates.length-1]) {
-    return true;
-  }
-  return false;
-}
-
-void main() {
-  var pastData = const <String, List> {
-    'cycleLengths': [1, 2],
-    'cycleStartDates': ['a', 'b'],
-    'entryDates': ['x', 'y']
-  };
-
-  List x = List.from(pastData['cycleLengths'] as List);
-  print(x);
 }
